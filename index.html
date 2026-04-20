@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nectar Lab — Em breve.</title>
+<link rel="icon" type="image/png" href="assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="assets/favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:#0a0a0a;color:#F2F0EC;font-family:'DM Sans',sans-serif;overflow:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(245,184,65,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(245,184,65,.055) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 85% 70% at 65% 35%,black 15%,transparent 72%);}
+.glow{position:fixed;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(245,184,65,.13) 0%,transparent 70%);top:2%;right:-8%;z-index:0;pointer-events:none;animation:gp 6s ease-in-out infinite;}
+@keyframes gp{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.1);opacity:1;}}
+main{position:relative;z-index:1;height:100vh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(20px,4vw,40px) clamp(24px,5vw,56px);}
+.top{display:flex;justify-content:space-between;align-items:center;}
+.brand{display:flex;align-items:center;gap:9px;font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#F2F0EC;text-decoration:none;}
+.brand .dot{color:#F5B841;}
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(245,184,65,.09);border:1px solid rgba(245,184,65,.22);border-radius:999px;padding:.28rem .9rem;font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;color:#F5B841;letter-spacing:.15em;text-transform:uppercase;}
+.bdot{width:5px;height:5px;background:#F5B841;border-radius:50%;animation:bk 1.9s ease-in-out infinite;}
+@keyframes bk{0%,100%{opacity:1;}50%{opacity:.15;}}
+/* MEIO — texto e contador lado a lado */
+.mid{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:48px;}
+.mid-text{flex:1 1 auto;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#4F4C46;letter-spacing:.12em;text-transform:uppercase;margin-bottom:clamp(20px,3vw,32px);display:flex;align-items:center;gap:14px;}
+.eyebrow::before{content:'';display:block;width:18px;height:1px;background:#4F4C46;}
+h1{font-family:sans-serif;font-size:clamp(2.8rem,7vw,8rem);font-weight:800;line-height:.91;letter-spacing:-.04em;color:#F2F0EC;}
+h1 .it{font-style:italic;font-weight:700;color:#F5B841;}
+h1 .mu{color:#2E2C28;}
+/* COUNTDOWN */
+.cd-block{flex:0 0 auto;}
+.cd{display:flex;align-items:flex-start;gap:2px;}
+.cd-unit{display:flex;flex-direction:column;align-items:center;min-width:clamp(52px,5.5vw,76px);}
+.cd-num{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4.5vw,4.5rem);font-weight:800;letter-spacing:-.05em;line-height:1;color:#F2F0EC;font-variant-numeric:tabular-nums;}
+.cd-lbl{font-family:'JetBrains Mono',monospace;font-size:.48rem;color:#4F4C46;letter-spacing:.16em;text-transform:uppercase;margin-top:5px;}
+.cd-sep{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3.5rem);font-weight:300;color:#252320;line-height:1;margin-top:2px;padding:0 1px;}
+/* BOTTOM */
+.bot{padding-top:28px;border-top:1px solid rgba(255,255,255,.05);}
+.prog-labels{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.55rem;color:#4F4C46;letter-spacing:.06em;margin-bottom:7px;}
+.prog-track{height:2px;background:#1a1815;border-radius:1px;overflow:hidden;}
+.prog-fill{height:100%;background:#F5B841;border-radius:1px;transition:width 1s linear;}
+.site-hint{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:#2E2C28;letter-spacing:.07em;margin-top:12px;}
+.site-hint a{color:#4F4C46;transition:color .2s;}
+.site-hint a:hover{color:#F5B841;}
+/* mobile — contador vai para baixo */
+@media(max-width:700px){
+  body{overflow:auto;}
+  main{height:auto;min-height:100vh;padding:24px 20px 32px;}
+  .mid{flex-direction:column;align-items:flex-start;gap:32px;}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main>
+  <div class="top">
+    <a class="brand" href="https://nectarlab.com.br">
+      Nectar<span class="dot">Lab</span>
+    </a>
+    <div class="badge"><span class="bdot"></span>Nova identidade · 01/05</div>
+  </div>
+
+  <div class="mid">
+    <div class="mid-text">
+      <div class="eyebrow">Nectar Lab · Est. 2022 · Florianópolis — SC</div>
+      <h1>Dados que<br><span class="it">decidem,</span><br><span class="mu">não que</span><br>enfeitam.</h1>
+    </div>
+    <div class="cd-block">
+      <div class="cd">
+        <div class="cd-unit"><span class="cd-num" id="d">--</span><span class="cd-lbl">dias</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="h">--</span><span class="cd-lbl">horas</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="m">--</span><span class="cd-lbl">min</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="s">--</span><span class="cd-lbl">seg</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bot">
+    <div class="prog-labels"><span>19 abr</span><span id="pct">0%</span><span>01 mai</span></div>
+    <div class="prog-track"><div class="prog-fill" id="bar" style="width:0%"></div></div>
+    <div class="site-hint">Em breve em <a href="https://nectarlab.com.br">nectarlab.com.br</a></div>
+  </div>
+</main>
+<script>
+const T=new Date('2025-05-01T00:00:00'),S=new Date('2025-04-19T00:00:00'),TOT=T-S;
+const pad=n=>String(n).padStart(2,'0');
+function tick(){
+  const now=new Date(),diff=T-now;
+  if(diff<=0){['d','h','m','s'].forEach(id=>document.getElementById(id).textContent='00');document.getElementById('bar').style.width='100%';document.getElementById('pct').textContent='100%';return;}
+  document.getElementById('d').textContent=pad(Math.floor(diff/86400000));
+  document.getElementById('h').textContent=pad(Math.floor((diff%86400000)/3600000));
+  document.getElementById('m').textContent=pad(Math.floor((diff%3600000)/60000));
+  document.getElementById('s').textContent=pad(Math.floor((diff%60000)/1000));
+  const p=Math.min(100,Math.round(((now-S)/TOT)*100));
+  document.getElementById('bar').style.width=p+'%';
+  document.getElementById('pct').textContent=p+'%';
+}
+tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
