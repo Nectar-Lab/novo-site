@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nectar Lab — Inteligência de negócios para decisões que movem empresas</title>
+<meta name="description" content="Laboratório de inteligência de negócios. Transformamos dados operacionais em decisões executivas — com BI estratégico, engenharia de dados, automação e IA.">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  /* ─────────────────────────────────────────────────────────────
+     HOME — 3 hero variations (switchable via Tweaks)
+     ───────────────────────────────────────────────────────────── */
+
+  /* Hide all hero variants by default, reveal the active one */
+  [data-hero-variant] { display: none; }
+  html[data-hero="v1"] [data-hero-variant="v1"],
+  html[data-hero="v2"] [data-hero-variant="v2"],
+  html[data-hero="v3"] [data-hero-variant="v3"] { display: flex; }
+  html:not([data-hero]) [data-hero-variant="v1"] { display: flex; }
+
+  /* Display font override (tweak) */
+  html[data-display-font="space-grotesk"] { --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; }
+  html[data-display-font="fraunces"] { --font-display: 'Fraunces', ui-serif, Georgia, serif; }
+  html[data-display-font="archivo"] { --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif; }
+  html[data-display-font="jetbrains"] { --font-display: 'JetBrains Mono', ui-monospace, Menlo, monospace; }
+
+  /* ── HERO — common ───────────────────────────────────────────── */
+  .hero {
+    position: relative; min-height: 100vh;
+    padding: calc(var(--nav-h) + 2rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+    overflow: hidden; isolation: isolate;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .55rem;
+    background: var(--accent-muted); border: 1px solid rgba(245,184,65,.28);
+    border-radius: 999px; padding: .35rem 1rem;
+    font-family: var(--font-display); font-size: .7rem; font-weight: 600;
+    color: var(--accent); letter-spacing: .12em; text-transform: uppercase;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(1.4); } }
+
+  /* ═════════════════════════════════════════════════════════════
+     V1 — TYPE-FORWARD (tipografia colossal + grid animado)
+     ═════════════════════════════════════════════════════════════ */
+  .hero-v1 {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero-v1 .hero-grid-lines {
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(var(--accent-glow) 1px, transparent 1px),
+      linear-gradient(90deg, var(--accent-glow) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, black 20%, transparent 100%);
+    opacity: .5;
+    animation: gridFloat 22s linear infinite;
+  }
+  @keyframes gridFloat { to { background-position: 72px 72px, 72px 72px; } }
+  .hero-v1 .hero-glow {
+    position: absolute; width: 820px; height: 820px; border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+    top: 45%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: -1;
+    filter: blur(10px);
+  }
+  .hero-v1 .container { max-width: 1240px; margin: 0 auto; width: 100%; }
+  .hero-v1 .hero-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: .72rem; color: var(--fg3);
+    letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 3rem; padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .hero-v1 .hero-meta .left { display: flex; gap: 2rem; }
+  .hero-v1 .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 11rem);
+    font-weight: 700; letter-spacing: -.045em; line-height: .9;
+    margin: 0; color: var(--fg1);
+  }
+  .hero-v1 .hero-title .line { display: block; }
+  .hero-v1 .hero-title .accent {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--honey-300) 60%, var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-style: italic; font-weight: 600;
+  }
+  .hero-v1 .hero-title .amp {
+    color: var(--fg3); font-weight: 400;
+  }
+  .hero-v1 .hero-bottom {
+    margin-top: 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    align-items: end;
+  }
+  .hero-v1 .hero-sub {
+    font-size: clamp(1rem, 1.4vw, 1.15rem); color: var(--fg2);
+    line-height: 1.65; max-width: 440px;
+  }
+  .hero-v1 .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 780px) {
+    .hero-v1 .hero-bottom { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-v1 .hero-cta { justify-content: flex-start; }
+    .hero-v1 .hero-meta .left { gap: 1rem; flex-wrap: wrap; }
+  }
+
+  /* ═════════════════════════════════════════════════════════════
+     V2 — HONEYCOMB LIVE (dashboard-as-hero)
+     ═════════════════════════════════════════════════════════════ */
+  .hero-v2 {
+    display: flex; align-items: center;
+  }
+  .hero-v2 .container { max-width: var(--max); margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: center; }
+  .hero-v2 .hero-copy { position: relative; z-index: 2; }
+  .hero-v2 .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5.2rem);
+    font-weight: 700; letter-spacing: -.035em; line-height: .98;
+    margin: 1.5rem 0 1.5rem;
+  }
+  .hero-v2 .hero-title .accent { color: var(--accent); }
+  .hero-v2 .hero-sub { font-size: 1.05rem; color: var(--fg2); line-height: 1.7; margin-bottom: 2rem; max-width: 480px; }
+  .hero-v2 .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-v2 .hero-clients {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .hero-v2 .hero-clients .mono-label { margin-bottom: .8rem; display: block; }
+  .hero-v2 .hero-clients-list {
+    display: flex; flex-wrap: wrap; gap: 1.4rem 1.8rem;
+    font-family: var(--font-display); font-weight: 600; color: var(--fg2);
+    font-size: .9rem;
+  }
+  .hero-v2 .hero-clients-list span { display: inline-flex; align-items: center; gap: .5rem; }
+  .hero-v2 .hero-clients-list span::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; }
+
+  /* Honeycomb viz */
+  .hc-viz {
+    position: relative; aspect-ratio: 1 / 1; max-width: 560px; margin: 0 auto;
+    width: 100%;
+  }
+  .hc-viz svg { width: 100%; height: 100%; overflow: visible; }
+  .hc-cell { fill: var(--card-bg); stroke: var(--border-strong); stroke-width: 1; transition: fill .5s var(--ease-in-out); }
+  .hc-cell.on { fill: var(--accent); stroke: var(--accent); }
+  .hc-cell.accent { fill: var(--accent-muted); stroke: rgba(245,184,65,.4); }
+  .hc-cell.featured { fill: var(--card-bg); stroke: var(--accent); stroke-width: 1.5; }
+  .hc-spark { stroke: var(--accent); stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .hc-num { font-family: var(--font-display); font-weight: 700; font-size: 14px; fill: var(--fg1); letter-spacing: -.02em; }
+  .hc-label { font-family: var(--font-display); font-weight: 600; font-size: 7px; fill: var(--fg3); letter-spacing: .1em; text-transform: uppercase; }
+
+  .hero-v2 .hero-glow-bg {
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    top: 50%; right: -10%; transform: translateY(-50%); pointer-events: none; z-index: 0;
+    filter: blur(20px);
+  }
+  @media (max-width: 900px) {
+    .hero-v2 .container { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hc-viz { max-width: 420px; }
+  }
+
+  /* ═════════════════════════════════════════════════════════════
+     V3 — MANIFESTO (split: texto editorial + terminal de dados)
+     ═════════════════════════════════════════════════════════════ */
+  .hero-v3 { display: flex; align-items: stretch; padding-top: var(--nav-h); padding-bottom: 0; }
+  .hero-v3 .container { max-width: 1400px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.05fr 1fr; min-height: calc(100vh - var(--nav-h)); }
+  .hero-v3 .manifesto { padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 5vw, 4rem) 0; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); }
+  .hero-v3 .manifesto-quote {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.2vw, 3.5rem);
+    font-weight: 500; letter-spacing: -.03em; line-height: 1.08;
+    color: var(--fg1); margin: 1.5rem 0 2rem;
+    text-wrap: balance;
+  }
+  .hero-v3 .manifesto-quote em { color: var(--accent); font-style: italic; font-weight: 600; }
+  .hero-v3 .manifesto-quote .strike { color: var(--fg3); text-decoration: line-through; text-decoration-thickness: 2px; font-weight: 400; }
+  .hero-v3 .manifesto-attr { font-family: var(--font-mono); font-size: .78rem; color: var(--fg3); letter-spacing: .06em; margin-bottom: 2.5rem; }
+  .hero-v3 .manifesto-attr::before { content: '— '; color: var(--accent); }
+  .hero-v3 .manifesto-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .hero-v3 .terminal {
+    background: #0B0B0B; color: #E8E6E0;
+    padding: 1.25rem 0;
+    display: flex; flex-direction: column;
+    font-family: var(--font-mono); font-size: .78rem; line-height: 1.85;
+    position: relative; overflow: hidden;
+  }
+  [data-theme="light"] .hero-v3 .terminal,
+  html:not([data-theme="dark"]) .hero-v3 .terminal { background: var(--graphite-900); color: #E8E6E0; }
+  .hero-v3 .terminal-bar {
+    display: flex; align-items: center; gap: 10px; padding: 0 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-family: var(--font-mono); font-size: .68rem; color: rgba(255,255,255,.5); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .hero-v3 .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .hero-v3 .term-dot.r { background: #E05C4B; } .hero-v3 .term-dot.y { background: var(--honey-400); } .hero-v3 .term-dot.g { background: #4BB37B; }
+  .hero-v3 .terminal-body { padding: 1.25rem 1.5rem; flex: 1; overflow: hidden; }
+  .hero-v3 .term-line { opacity: 0; animation: termLine .5s var(--ease-in-out) both; }
+  .hero-v3 .term-line:nth-child(1) { animation-delay: .2s; }
+  .hero-v3 .term-line:nth-child(2) { animation-delay: .6s; }
+  .hero-v3 .term-line:nth-child(3) { animation-delay: 1.1s; }
+  .hero-v3 .term-line:nth-child(4) { animation-delay: 1.6s; }
+  .hero-v3 .term-line:nth-child(5) { animation-delay: 2.2s; }
+  .hero-v3 .term-line:nth-child(6) { animation-delay: 2.8s; }
+  .hero-v3 .term-line:nth-child(7) { animation-delay: 3.4s; }
+  .hero-v3 .term-line:nth-child(8) { animation-delay: 4.1s; }
+  @keyframes termLine { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-v3 .term-prompt { color: var(--honey-400); }
+  .hero-v3 .term-kw { color: #5CC8C4; }
+  .hero-v3 .term-str { color: #E8C16A; }
+  .hero-v3 .term-num { color: var(--honey-400); font-weight: 500; }
+  .hero-v3 .term-comment { color: rgba(255,255,255,.38); }
+  .hero-v3 .term-result { color: #4BB37B; }
+  .hero-v3 .term-arrow { color: rgba(255,255,255,.4); }
+  .hero-v3 .cursor { display: inline-block; width: 8px; height: 1em; background: var(--honey-400); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  @media (max-width: 900px) {
+    .hero-v3 .container { grid-template-columns: 1fr; min-height: auto; }
+    .hero-v3 .manifesto { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; }
+  }
+
+  /* ── MANIFESTO / STATEMENT STRIP ─────────────────────────────── */
+  .statement {
+    padding: clamp(80px, 12vw, 160px) clamp(1.25rem, 5vw, 3rem);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated);
+    position: relative; overflow: hidden;
+  }
+  .statement .container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .statement-text {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    line-height: 1.12; letter-spacing: -.032em;
+    color: var(--fg1); text-wrap: balance;
+  }
+  .statement-text .muted { color: var(--fg3); }
+  .statement-text .accent { color: var(--accent); }
+
+  /* ── SERVIÇOS SECTION ────────────────────────────────────────── */
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .service {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 1.75rem 1.4rem;
+    display: flex; flex-direction: column;
+    transition: all var(--dur-base) var(--ease-in-out); position: relative; overflow: hidden;
+  }
+  .service::before {
+    content: attr(data-num); position: absolute; top: 1.2rem; right: 1.2rem;
+    font-family: var(--font-mono); font-size: .7rem; color: var(--fg3); letter-spacing: .06em;
+  }
+  .service::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform .4s var(--ease-in-out);
+  }
+  .service:hover { transform: translateY(-5px); border-color: rgba(245,184,65,.3); box-shadow: var(--card-shadow-hover); }
+  .service:hover::after { transform: scaleX(1); }
+  .service-icon {
+    width: 46px; height: 46px; background: var(--accent-muted); border-radius: 12px;
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.3rem;
+  }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service h3 { font-family: var(--font-display); font-size: 1.06rem; font-weight: 600; margin: 0 0 .6rem; color: var(--fg1); letter-spacing: -.01em; }
+  .service p { font-size: .88rem; color: var(--fg2); line-height: 1.65; margin: 0 0 1.2rem; flex: 1; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .service-tags span {
+    font-family: var(--font-mono); font-size: .65rem; letter-spacing: .04em;
+    color: var(--fg3); padding: 2px 7px; border: 1px solid var(--border); border-radius: 4px;
+  }
+
+  @media (max-width: 980px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .services-grid { grid-template-columns: 1fr; } }
+
+  /* ── STATS ─────────────────────────────────────────────────── */
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    margin-top: 3.5rem;
+  }
+  .stat-cell {
+    background: var(--bg); padding: 2rem 1.4rem;
+    display: flex; flex-direction: column; gap: .4rem;
+    transition: background var(--dur-base) var(--ease-in-out);
+  }
+  .stat-cell:hover { background: var(--bg-elevated); }
+  .stat-number {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2.2rem, 3.8vw, 3rem);
+    color: var(--accent); letter-spacing: -.03em; line-height: 1;
+  }
+  .stat-label { font-size: .84rem; color: var(--fg2); line-height: 1.45; max-width: 220px; }
+
+  @media (max-width: 880px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .stats-strip { grid-template-columns: 1fr; } }
+
+  /* ── CLIENTS MARQUEE ─────────────────────────────────────────── */
+  .clients-band { padding: 3.5rem clamp(1.25rem, 5vw, 3rem); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+  .clients-band .mono-label { display: block; text-align: center; margin-bottom: 1.8rem; }
+  .clients-list {
+    display: flex; justify-content: space-around; align-items: center; gap: 3rem;
+    flex-wrap: wrap;
+    font-family: var(--font-display); font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.3rem);
+    color: var(--fg3); letter-spacing: -.01em;
+  }
+  .clients-list span { transition: color var(--dur-base) var(--ease-in-out); cursor: default; }
+  .clients-list span:hover { color: var(--fg1); }
+
+  /* ── FEATURED CASES ──────────────────────────────────────────── */
+  .cases-feed { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); }
+  .case-row {
+    display: grid; grid-template-columns: 80px 1fr auto auto;
+    gap: 2rem; align-items: center;
+    padding: 1.6rem 0; border-bottom: 1px solid var(--border);
+    transition: all var(--dur-base) var(--ease-in-out);
+    position: relative;
+    text-decoration: none; color: inherit;
+  }
+  .case-row:hover { background: var(--bg-elevated); padding-left: 1rem; padding-right: 1rem; margin: 0 -1rem; }
+  .case-row:hover .case-arrow { color: var(--accent); transform: translate(4px, -4px); }
+  .case-row:hover h3 { color: var(--accent); }
+  .case-year { font-family: var(--font-mono); font-size: .78rem; color: var(--fg3); letter-spacing: .08em; }
+  .case-info h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; letter-spacing: -.02em; margin: 0 0 .3rem; color: var(--fg1); transition: color var(--dur-base) var(--ease-in-out); }
+  .case-info p { font-size: .9rem; color: var(--fg2); margin: 0; }
+  .case-tags { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
+  .case-tags span { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; color: var(--fg3); padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px; }
+  .case-arrow { color: var(--fg3); transition: all var(--dur-base) var(--ease-in-out); flex-shrink: 0; }
+  @media (max-width: 780px) {
+    .case-row { grid-template-columns: 1fr auto; gap: 1rem; padding: 1.4rem 0; }
+    .case-year { grid-column: 1 / -1; order: -1; }
+    .case-tags { display: none; }
+  }
+
+  /* ── BLOG PREVIEW ────────────────────────────────────────────── */
+  .blog-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .post-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: all var(--dur-base) var(--ease-in-out);
+    text-decoration: none; color: inherit;
+  }
+  .post-card:hover { transform: translateY(-4px); border-color: rgba(245,184,65,.3); box-shadow: var(--card-shadow-hover); }
+  .post-card:hover .post-title { color: var(--accent); }
+  .post-cover {
+    aspect-ratio: 16 / 10; background: var(--bg-sunken);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .post-cover svg { width: 100%; height: 100%; }
+  .post-body { padding: 1.4rem; display: flex; flex-direction: column; flex: 1; gap: .75rem; }
+  .post-meta { display: flex; align-items: center; gap: .7rem; }
+  .post-meta .chip { padding: 2px 8px; font-size: .65rem; }
+  .post-meta .date { font-family: var(--font-mono); font-size: .72rem; color: var(--fg3); letter-spacing: .04em; }
+  .post-title { font-family: var(--font-display); font-size: 1.08rem; font-weight: 600; letter-spacing: -.018em; line-height: 1.3; margin: 0; color: var(--fg1); transition: color var(--dur-base) var(--ease-in-out); text-wrap: balance; }
+  .post-excerpt { font-size: .88rem; color: var(--fg2); line-height: 1.6; margin: 0; flex: 1; }
+  .post-footer { display: flex; align-items: center; justify-content: space-between; }
+  .read-more { font-family: var(--font-mono); font-size: .74rem; color: var(--accent); letter-spacing: .04em; display: inline-flex; align-items: center; gap: .4rem; }
+  .read-time { font-family: var(--font-mono); font-size: .7rem; color: var(--fg3); }
+
+  @media (max-width: 860px) { .blog-preview-grid { grid-template-columns: 1fr; } }
+
+  /* ── FINAL CTA ───────────────────────────────────────────────── */
+  .cta-band {
+    padding: clamp(80px, 12vw, 140px) clamp(1.25rem, 5vw, 3rem);
+    position: relative; overflow: hidden;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+  }
+  .cta-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+  .cta-title { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; margin: 1rem 0; color: var(--fg1); text-wrap: balance; }
+  .cta-title .accent { color: var(--accent); }
+  .cta-sub { color: var(--fg2); font-size: 1.02rem; line-height: 1.65; max-width: 540px; margin: 0 auto 2.5rem; }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-band .honeycomb-bg { opacity: .08; }
+
+  /* ── TWEAKS PANEL ────────────────────────────────────────────── */
+  .tweaks-panel {
+    position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+    background: var(--card-bg); border: 1px solid var(--border-strong);
+    border-radius: 14px; padding: 1rem 1.1rem;
+    box-shadow: var(--shadow-xl);
+    min-width: 260px;
+    display: none;
+    font-family: var(--font-body);
+  }
+  .tweaks-panel.on { display: block; }
+  .tweaks-panel h5 { font-family: var(--font-display); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem; display: flex; align-items: center; gap: .5rem; }
+  .tweaks-panel h5::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  .tweaks-group { margin-bottom: 1rem; }
+  .tweaks-group:last-child { margin-bottom: 0; }
+  .tweaks-group label { display: block; font-size: .72rem; color: var(--fg3); font-family: var(--font-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .5rem; }
+  .tweaks-opts { display: grid; gap: 4px; grid-template-columns: repeat(3, 1fr); }
+  .tweaks-opts button {
+    background: var(--bg-sunken); border: 1px solid var(--border); color: var(--fg2);
+    font-family: var(--font-display); font-size: .74rem; font-weight: 600;
+    padding: .5rem .3rem; border-radius: 8px; cursor: pointer;
+    transition: var(--transition);
+  }
+  .tweaks-opts button:hover { border-color: var(--accent); color: var(--fg1); }
+  .tweaks-opts button.active { background: var(--accent); color: var(--fg-on-accent); border-color: var(--accent); }
+  .tweaks-opts.fonts { grid-template-columns: repeat(2, 1fr); }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-page="home">
+
+<!-- Nav injected here -->
+<div id="nav-slot"></div>
+
+<!-- ═════════════════════ HERO V1 — TYPE-FORWARD ═════════════════════ -->
+<section class="hero hero-v1" data-hero-variant="v1" data-screen-label="Home · Hero V1">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-meta fade-up">
+      <div class="left">
+        <span>NECTAR/LAB</span>
+        <span>/ INTELIGÊNCIA DE NEGÓCIOS</span>
+        <span>/ EST. 2022</span>
+      </div>
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Aceitando projetos · 2026</div>
+    </div>
+
+    <h1 class="hero-title fade-up">
+      <span class="line">Dados</span>
+      <span class="line"><span class="accent">que decidem</span> <span class="amp">—</span></span>
+      <span class="line">não que enfeitam.</span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-sub fade-up">
+        Nectar Lab é um laboratório de inteligência de negócios. Transformamos
+        dados operacionais em decisões executivas — com BI estratégico,
+        engenharia de dados, automação e IA aplicada ao negócio.
+      </p>
+      <div class="hero-cta fade-up">
+        <a href="https://wa.me/5548991703222" class="btn-primary" target="_blank" rel="noopener">
+          Conversar no WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="cases.html" class="btn-outline">Ver cases</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ HERO V2 — HONEYCOMB LIVE ═════════════════════ -->
+<section class="hero hero-v2" data-hero-variant="v2" data-screen-label="Home · Hero V2">
+  <div class="hero-glow-bg"></div>
+  <div class="container">
+    <div class="hero-copy">
+      <div class="hero-badge fade-up"><span class="hero-badge-dot"></span>Aceitando projetos · 2026</div>
+      <h1 class="hero-title fade-up">
+        Inteligência de negócios <span class="accent">que cabe na sua sala de reunião.</span>
+      </h1>
+      <p class="hero-sub fade-up">
+        Pipelines, dashboards e automações construídos para sustentar decisão —
+        não para encher apresentação. Integramos tudo que sua empresa já usa e
+        devolvemos em forma de número que importa.
+      </p>
+      <div class="hero-cta fade-up">
+        <a href="https://wa.me/5548991703222" class="btn-primary" target="_blank" rel="noopener">
+          Conversar no WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="servicos.html" class="btn-outline">O que fazemos</a>
+      </div>
+      <div class="hero-clients fade-up">
+        <span class="mono-label">Já com:</span>
+        <div class="hero-clients-list">
+          <span>ZoomTecnologia</span>
+          <span>Labellamafia</span>
+          <span>Nexxera</span>
+          <span>Flex Relacionamentos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hc-viz fade-up" id="hcViz">
+      <!-- honeycomb svg injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ HERO V3 — MANIFESTO + TERMINAL ═════════════════════ -->
+<section class="hero hero-v3" data-hero-variant="v3" data-screen-label="Home · Hero V3">
+  <div class="container">
+    <div class="manifesto">
+      <div class="hero-badge fade-up"><span class="hero-badge-dot"></span>Manifesto</div>
+      <p class="manifesto-quote fade-up">
+        <span class="strike">Relatórios bonitos.</span><br>
+        <span class="strike">Dashboards decorativos.</span><br>
+        <em>Decisões que movem o negócio.</em>
+      </p>
+      <p class="manifesto-attr fade-up">Heitor Marchi · fundador, Nectar Lab</p>
+      <div class="manifesto-cta fade-up">
+        <a href="https://wa.me/5548991703222" class="btn-primary" target="_blank" rel="noopener">
+          Conversar no WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="sobre.html" class="btn-outline">Sobre o laboratório</a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+        <span style="margin-left:.8rem;">nectarlab — zsh — forecast.sql</span>
+      </div>
+      <div class="terminal-body">
+        <div class="term-line"><span class="term-comment">-- pergunta do diretor comercial:</span></div>
+        <div class="term-line"><span class="term-comment">-- "quanto vamos fechar no Q2?"</span></div>
+        <div class="term-line">&nbsp;</div>
+        <div class="term-line"><span class="term-prompt">nectar@lab ~ %</span> <span class="term-kw">SELECT</span> forecast_q2 <span class="term-kw">FROM</span> funil_comercial;</div>
+        <div class="term-line"><span class="term-arrow">↳</span> <span class="term-result">R$ 4.820.000 · confiança 85%</span></div>
+        <div class="term-line">&nbsp;</div>
+        <div class="term-line"><span class="term-comment">-- 6 meses atrás: 60% de precisão.</span></div>
+        <div class="term-line"><span class="term-comment">-- hoje: 85%. sem mágica. com método.</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ STATEMENT STRIP ═════════════════════ -->
+<section class="statement">
+  <div class="honeycomb-bg"></div>
+  <div class="container">
+    <p class="statement-text fade-up">
+      <span class="muted">Somos uma empresa especializada em</span>
+      inteligência de negócios, consultoria empresarial, processos e
+      <span class="muted">desenvolvimento de aplicações e integrações.</span>
+      <span class="accent">Nosso objetivo é eliminar a incerteza das decisões executivas.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ═════════════════════ SERVIÇOS ═════════════════════ -->
+<section id="servicos" data-screen-label="Home · Serviços">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow-inline">O que fazemos</span>
+      <h2 class="section-title">Quatro frentes que se conectam como um favo.</h2>
+      <p class="section-desc">Integradas, não isoladas. Cada disciplina serve a próxima — da arquitetura de dados que sustenta o dashboard que alimenta a automação que entrega o insight.</p>
+    </div>
+    <div class="services-grid">
+      <article class="service fade-up" data-num="01">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L2 7 l10 5 10-5 Z"/><path d="M2 17 l10 5 10-5"/><path d="M2 12 l10 5 10-5"/></svg></div>
+        <h3>Data Strategy</h3>
+        <p>Governança, roadmap e cultura de dados. Discovery executivo, mapa de indicadores, arquitetura-alvo.</p>
+        <div class="service-tags"><span>Discovery</span><span>Governança</span><span>Roadmap</span></div>
+      </article>
+      <article class="service fade-up" data-num="02">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3 v18 h18"/><path d="M7 14 l4-4 4 4 6-6"/></svg></div>
+        <h3>Business Intelligence</h3>
+        <p>Dashboards estratégicos, KPIs executivos e modelos analíticos que revelam o que os números escondem.</p>
+        <div class="service-tags"><span>Power BI</span><span>Metabase</span><span>DAX</span></div>
+      </article>
+      <article class="service fade-up" data-num="03">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5 v14 c0 1.66 4 3 9 3 s9-1.34 9-3 V5"/><path d="M3 12 c0 1.66 4 3 9 3 s9-1.34 9-3"/></svg></div>
+        <h3>Data Engineering</h3>
+        <p>Modelagem, pipelines ETL/ELT, integrações heterogêneas e orquestração sobre AWS, Airbyte e dbt.</p>
+        <div class="service-tags"><span>Python</span><span>SQL</span><span>AWS</span><span>Airbyte</span></div>
+      </article>
+      <article class="service fade-up" data-num="04">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L3 14 h9 l-1 8 10-12 h-9 z"/></svg></div>
+        <h3>Automação &amp; IA</h3>
+        <p>Workflows n8n, APIs, agentes de IA e automações que tiram o gargalo humano das rotinas operacionais.</p>
+        <div class="service-tags"><span>n8n</span><span>APIs</span><span>LLMs</span></div>
+      </article>
+    </div>
+
+    <div class="stats-strip fade-up">
+      <div class="stat-cell"><div class="stat-number">+11</div><div class="stat-label">anos em dados e BI</div></div>
+      <div class="stat-cell"><div class="stat-number">+70</div><div class="stat-label">pessoas lideradas em times de dados</div></div>
+      <div class="stat-cell"><div class="stat-number">60→85%</div><div class="stat-label">precisão de forecast em 6 meses</div></div>
+      <div class="stat-cell"><div class="stat-number">−35%</div><div class="stat-label">tempo médio de entrega de relatório</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ CLIENTS ═════════════════════ -->
+<section class="clients-band">
+  <div class="container">
+    <span class="mono-label">Empresas que já confiaram na Nectar Lab</span>
+    <div class="clients-list">
+      <span>ZoomTecnologia</span>
+      <span>Labellamafia</span>
+      <span>Nexxera</span>
+      <span>Flex Relacionamentos</span>
+      <span>ExactSales</span>
+      <span>Pessoalize</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ CASES ═════════════════════ -->
+<section id="cases" data-screen-label="Home · Cases">
+  <div class="container">
+    <div class="section-head" style="display:flex; justify-content:space-between; align-items:flex-end; max-width:none; gap:2rem; flex-wrap:wrap;">
+      <div style="max-width:580px;">
+        <span class="eyebrow-inline">Cases selecionados</span>
+        <h2 class="section-title">Problemas reais resolvidos com dados — não com código.</h2>
+      </div>
+      <a href="cases.html" class="btn-ghost">
+        Ver todos os cases
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="cases-feed">
+      <a href="cases.html#forecast" class="case-row fade-up">
+        <span class="case-year">2024 · ExactSales</span>
+        <div class="case-info">
+          <h3>Forecast comercial: 60% → 85% de precisão em 6 meses</h3>
+          <p>Modelo preditivo integrado ao CRM. Previsibilidade de funil e planejamento de capacidade.</p>
+        </div>
+        <div class="case-tags"><span>Python</span><span>Power BI</span><span>SQL</span></div>
+        <svg class="case-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M7 7 h10 v10"/></svg>
+      </a>
+      <a href="cases.html#dw" class="case-row fade-up">
+        <span class="case-year">2024 · Pessoalize</span>
+        <div class="case-info">
+          <h3>Data Warehouse unificado · 5+ fontes, 1 modelo analítico</h3>
+          <p>Migração para Modern Data Stack com Airbyte + dbt-core. Governança por perfil e alertas de inconsistência.</p>
+        </div>
+        <div class="case-tags"><span>AWS</span><span>Airbyte</span><span>dbt</span></div>
+        <svg class="case-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M7 7 h10 v10"/></svg>
+      </a>
+      <a href="cases.html#zoom" class="case-row fade-up">
+        <span class="case-year">2023 · ZoomTecnologia</span>
+        <div class="case-info">
+          <h3>De planilhas a plataforma · aprovação do PE 2024–2028</h3>
+          <p>Middleware ERP → Databricks → Power BI. Indicadores para todas as gerências em 3 meses.</p>
+        </div>
+        <div class="case-tags"><span>Databricks</span><span>Power BI</span><span>ERP</span></div>
+        <svg class="case-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M7 7 h10 v10"/></svg>
+      </a>
+      <a href="cases.html#labella" class="case-row fade-up">
+        <span class="case-year">2022 · Labellamafia</span>
+        <div class="case-info">
+          <h3>S&amp;OP + DevOps: dois comitês executivos, um método</h3>
+          <p>Simulação ERP para estoque e produção, práticas ágeis (Scrum/JIRA) e analytics integrado.</p>
+        </div>
+        <div class="case-tags"><span>Scrum</span><span>S&amp;OP</span><span>ERP</span></div>
+        <svg class="case-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 L17 7"/><path d="M7 7 h10 v10"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ BLOG PREVIEW ═════════════════════ -->
+<section id="blog" style="background: var(--bg-elevated); border-top: 1px solid var(--border);" data-screen-label="Home · Blog preview">
+  <div class="container">
+    <div class="section-head" style="display:flex; justify-content:space-between; align-items:flex-end; max-width:none; gap:2rem; flex-wrap:wrap;">
+      <div style="max-width:560px;">
+        <span class="eyebrow-inline">Blog</span>
+        <h2 class="section-title">Dicas práticas de quem implementa — não de quem palestra.</h2>
+      </div>
+      <a href="blog.html" class="btn-ghost">
+        Todos os artigos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="blog-preview-grid">
+      <a href="post.html" class="post-card fade-up">
+        <div class="post-cover">
+          <!-- BI cover: sparkline + bars -->
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="250" fill="var(--bg-sunken)"/>
+            <g opacity=".15" stroke="var(--fg3)" stroke-width="1"><path d="M0 60 H400 M0 110 H400 M0 160 H400 M0 210 H400"/></g>
+            <g fill="var(--accent)" opacity=".85"><rect x="40" y="150" width="26" height="60" rx="2"/><rect x="80" y="120" width="26" height="90" rx="2"/><rect x="120" y="90" width="26" height="120" rx="2"/><rect x="160" y="110" width="26" height="100" rx="2"/><rect x="200" y="70" width="26" height="140" rx="2"/><rect x="240" y="50" width="26" height="160" rx="2"/><rect x="280" y="80" width="26" height="130" rx="2"/><rect x="320" y="40" width="26" height="170" rx="2"/></g>
+            <path d="M53 160 L93 130 L133 100 L173 115 L213 80 L253 55 L293 90 L333 45" fill="none" stroke="var(--fg1)" stroke-width="2" stroke-linecap="round"/>
+            <g fill="var(--fg1)"><circle cx="53" cy="160" r="3"/><circle cx="253" cy="55" r="3"/><circle cx="333" cy="45" r="3"/></g>
+          </svg>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <span class="chip accent"><span class="chip-dot"></span>BI</span>
+            <span class="date">14.ABR.2026</span>
+          </div>
+          <h3 class="post-title">O dashboard que ninguém abre: por que o seu BI virou decoração (e como resolver)</h3>
+          <p class="post-excerpt">Três sintomas clássicos de um BI que nasceu morto — e a checklist que usamos em cada discovery executivo.</p>
+          <div class="post-footer">
+            <span class="read-more">Ler artigo →</span>
+            <span class="read-time">7 min</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="post.html" class="post-card fade-up">
+        <div class="post-cover">
+          <!-- automation cover: flow nodes -->
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="250" fill="var(--bg-sunken)"/>
+            <g fill="none" stroke="var(--fg3)" stroke-width="1.5" opacity=".5">
+              <path d="M80 125 Q160 125 200 85 T320 85" stroke-dasharray="4 4"/>
+              <path d="M80 125 Q160 125 200 165 T320 165" stroke-dasharray="4 4"/>
+            </g>
+            <g><rect x="40" y="100" width="80" height="50" rx="8" fill="var(--card-bg)" stroke="var(--accent)" stroke-width="1.5"/><text x="80" y="128" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--fg1)">trigger</text></g>
+            <g><rect x="280" y="60" width="80" height="50" rx="8" fill="var(--accent-muted)" stroke="var(--accent)" stroke-width="1.5"/><text x="320" y="88" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--accent)">n8n</text></g>
+            <g><rect x="280" y="140" width="80" height="50" rx="8" fill="var(--accent-muted)" stroke="var(--accent)" stroke-width="1.5"/><text x="320" y="168" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--accent)">LLM</text></g>
+          </svg>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <span class="chip accent"><span class="chip-dot"></span>Automação</span>
+            <span class="date">02.ABR.2026</span>
+          </div>
+          <h3 class="post-title">n8n + OpenAI: 7 automações que pagam o salário de um estagiário em 30 dias</h3>
+          <p class="post-excerpt">Casos reais de automação leve com retorno mensurável — sem precisar contratar time de engenharia.</p>
+          <div class="post-footer">
+            <span class="read-more">Ler artigo →</span>
+            <span class="read-time">9 min</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="post.html" class="post-card fade-up">
+        <div class="post-cover">
+          <!-- carreira cover: hex grid -->
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="250" fill="var(--bg-sunken)"/>
+            <g fill="none" stroke="var(--fg3)" stroke-width="1" opacity=".3">
+              <path d="M80 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M170 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M260 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M350 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M125 122 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M215 122 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M305 122 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+            </g>
+            <g fill="var(--accent)">
+              <path d="M170 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M215 122 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+            </g>
+            <g fill="var(--accent-muted)" stroke="var(--accent)" stroke-width="1">
+              <path d="M260 70 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+              <path d="M125 122 l30 17 v35 l-30 17 l-30-17 v-35 z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <span class="chip accent"><span class="chip-dot"></span>Carreira</span>
+            <span class="date">25.MAR.2026</span>
+          </div>
+          <h3 class="post-title">Analista, engenheiro, estrategista: o mapa de carreira em dados que uso com meu time</h3>
+          <p class="post-excerpt">Os 3 níveis que defino com meus mentorados — o que muda em cada um e quando pedir aumento.</p>
+          <div class="post-footer">
+            <span class="read-more">Ler artigo →</span>
+            <span class="read-time">6 min</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════ CTA FINAL ═════════════════════ -->
+<section class="cta-band" data-screen-label="Home · CTA final">
+  <div class="honeycomb-bg"></div>
+  <div class="cta-inner">
+    <span class="eyebrow-inline" style="justify-content:center;">Próximo passo</span>
+    <h2 class="cta-title fade-up">Se você está construindo algo sério com dados, <span class="accent">me chama.</span></h2>
+    <p class="cta-sub fade-up">Primeira conversa é diagnóstico, não venda. Em 30 minutos você sai com 3 decisões acionáveis — com ou sem a gente no projeto.</p>
+    <div class="cta-buttons fade-up">
+      <a href="https://wa.me/5548991703222" class="btn-primary" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L.057 23.5l5.797-1.522A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.887 9.887 0 0 1-5.031-1.375l-.361-.214-3.741.981.999-3.648-.235-.374A9.865 9.865 0 0 1 2.106 12C2.106 6.58 6.58 2.106 12 2.106S21.894 6.58 21.894 12 17.42 21.894 12 21.894z"/></svg>
+        Chamar no WhatsApp
+      </a>
+      <a href="contato.html" class="btn-outline">Outras formas de contato</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer injected here -->
+<div id="footer-slot"></div>
+
+<!-- ═════════════════════ TWEAKS PANEL ═════════════════════ -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <h5>Tweaks</h5>
+  <div class="tweaks-group">
+    <label>Variação do Hero</label>
+    <div class="tweaks-opts" data-tweak="hero">
+      <button data-val="v1">Type</button>
+      <button data-val="v2">Hexgrid</button>
+      <button data-val="v3">Terminal</button>
+    </div>
+  </div>
+  <div class="tweaks-group">
+    <label>Tipografia (display)</label>
+    <div class="tweaks-opts fonts" data-tweak="display-font">
+      <button data-val="space-grotesk">Space Grotesk</button>
+      <button data-val="archivo">Archivo</button>
+      <button data-val="fraunces">Fraunces</button>
+      <button data-val="jetbrains">JetBrains</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Inject shared nav + footer
+  (async () => {
+    try {
+      const r = await fetch('assets/nav-footer.html');
+      const html = await r.text();
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      const nav = tmp.querySelector('[data-nav-template]');
+      const foot = tmp.querySelector('[data-footer-template]');
+      document.getElementById('nav-slot').replaceWith(nav);
+      document.getElementById('footer-slot').replaceWith(foot);
+
+      // Load site.js after nav is in
+      const s = document.createElement('script');
+      s.src = 'assets/site.js';
+      document.body.appendChild(s);
+    } catch (e) { console.error(e); }
+  })();
+</script>
+
+<script>
+  // ══════════ HONEYCOMB LIVE VISUAL (V2 hero) ═══════════════════
+  (function () {
+    const host = document.getElementById('hcViz');
+    if (!host) return;
+    const R = 42;              // hex radius
+    const w = Math.sqrt(3) * R; // width
+    const h = 2 * R;            // height
+    const dx = w;
+    const dy = 1.5 * R;
+
+    const cols = 7, rows = 7;
+    const cx = (cols - 1) * dx / 2;
+    const cy = (rows - 1) * dy / 2;
+
+    const svgW = cols * dx + w;
+    const svgH = rows * dy + R;
+
+    function hexPath(cx, cy, r) {
+      const pts = [];
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 3 * i + Math.PI / 2;
+        pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+      }
+      return 'M' + pts.map(p => p.join(',')).join(' L') + ' Z';
+    }
+
+    let html = `<svg viewBox="${-w/2} ${-h/2} ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg">`;
+    const cells = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x = col * dx + (row % 2) * dx / 2;
+        const y = row * dy;
+        // skip outer corners for rounder look
+        const distFromCenter = Math.hypot((x - cx) / cx, (y - cy) / cy);
+        if (distFromCenter > 1.05) continue;
+        cells.push({ x, y, row, col });
+        html += `<path class="hc-cell" d="${hexPath(x, y, R - 2)}" data-idx="${cells.length - 1}"/>`;
+      }
+    }
+
+    // Featured center cell (big metric)
+    const centerIdx = cells.findIndex(c => Math.abs(c.x - cx) < 2 && Math.abs(c.y - cy) < 2);
+
+    html += `</svg>`;
+    host.innerHTML = html;
+
+    // Animate: cells light up in sequence
+    const order = [...cells.keys()].sort(() => Math.random() - 0.5);
+    const svg = host.querySelector('svg');
+
+    // Sparkline + number in center cell
+    setTimeout(() => {
+      if (centerIdx >= 0) {
+        const c = cells[centerIdx];
+        svg.querySelector(`[data-idx="${centerIdx}"]`).classList.add('featured');
+        const sparkPts = [
+          [c.x - 22, c.y + 6], [c.x - 14, c.y + 2], [c.x - 6, c.y + 8],
+          [c.x + 2, c.y - 4], [c.x + 10, c.y - 10], [c.x + 18, c.y - 14]
+        ];
+        const spark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        spark.setAttribute('class', 'hc-spark');
+        spark.setAttribute('d', 'M' + sparkPts.map(p => p.join(',')).join(' L'));
+        svg.appendChild(spark);
+        const num = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        num.setAttribute('class', 'hc-num');
+        num.setAttribute('x', c.x); num.setAttribute('y', c.y + 22);
+        num.setAttribute('text-anchor', 'middle');
+        num.textContent = '+85%';
+        svg.appendChild(num);
+      }
+    }, 400);
+
+    // Neighbor cells get accent tint
+    const accentIdxs = [];
+    cells.forEach((c, i) => {
+      if (i === centerIdx) return;
+      const d = Math.hypot(c.x - cx, c.y - cy);
+      if (d < R * 2 && Math.random() < 0.5) accentIdxs.push(i);
+    });
+
+    let step = 0;
+    const tickInterval = setInterval(() => {
+      if (step >= cells.length * 0.35) {
+        clearInterval(tickInterval);
+        // Ongoing pulse: pick random cell occasionally
+        setInterval(() => {
+          const idx = Math.floor(Math.random() * cells.length);
+          if (idx === centerIdx) return;
+          const el = svg.querySelector(`[data-idx="${idx}"]`);
+          if (!el) return;
+          el.classList.add('on');
+          setTimeout(() => el.classList.remove('on'), 800);
+        }, 900);
+        return;
+      }
+      const idx = order[step++];
+      if (idx === centerIdx) return;
+      const el = svg.querySelector(`[data-idx="${idx}"]`);
+      if (!el) return;
+      if (accentIdxs.includes(idx)) {
+        el.classList.add('accent');
+      } else {
+        el.classList.add('on');
+        setTimeout(() => el.classList.remove('on'), 600);
+      }
+    }, 80);
+  })();
+</script>
+
+<script>
+  // ══════════ TWEAKS MODE ═══════════════════
+  (function () {
+    const panel = document.getElementById('tweaksPanel');
+
+    const state = /*EDITMODE-BEGIN*/{
+      "hero": "v1",
+      "displayFont": "archivo"
+    }/*EDITMODE-END*/;
+
+    const apply = () => {
+      document.documentElement.setAttribute('data-hero', state.hero);
+      document.documentElement.setAttribute('data-display-font', state.displayFont);
+      panel.querySelectorAll('[data-tweak="hero"] button').forEach(b => b.classList.toggle('active', b.dataset.val === state.hero));
+      panel.querySelectorAll('[data-tweak="display-font"] button').forEach(b => b.classList.toggle('active', b.dataset.val === state.displayFont));
+    };
+    apply();
+
+    panel.querySelectorAll('.tweaks-opts button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.closest('.tweaks-opts').dataset.tweak;
+        const val = btn.dataset.val;
+        if (key === 'hero') state.hero = val;
+        else if (key === 'display-font') state.displayFont = val;
+        apply();
+        try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: key === 'hero' ? { hero: val } : { displayFont: val } }, '*'); } catch {}
+      });
+    });
+
+    window.addEventListener('message', (e) => {
+      if (!e.data) return;
+      if (e.data.type === '__activate_edit_mode') panel.classList.add('on');
+      else if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('on');
+    });
+    try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
+  })();
+</script>
+</body>
+</html>

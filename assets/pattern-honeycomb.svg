@@ -1,0 +1,11 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="60" height="52">
+  <defs>
+    <pattern id="hex" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+      <path d="M15 2 L29 2 L36 14 L29 26 L15 26 L8 14 Z" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"></path>
+      <path d="M45 28 L59 28 L66 40 L59 52 L45 52 L38 40 Z" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"></path>
+      <path d="M-15 28 L-1 28 L6 40 L-1 52 L-15 52 L-22 40 Z" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"></path>
+    </pattern>
+  </defs>
+  <rect width="60" height="52" fill="url(#hex)"></rect>
+</svg>

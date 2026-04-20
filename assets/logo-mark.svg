@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" role="img" aria-label="Nectar Lab mark">
+  <g transform="translate(8 6)">
+    <path d="M18 2 L32 10 L32 26 L18 34 L4 26 L4 10 Z" fill="#F5B841"></path>
+    <path d="M34 26 L48 34 L48 50 L34 58 L20 50 L20 34 Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"></path>
+    <line x1="18" y1="18" x2="34" y2="42" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></line>
+    <circle cx="18" cy="18" r="3.4" fill="currentColor"></circle>
+    <circle cx="34" cy="42" r="3.4" fill="#F5B841" stroke="currentColor" stroke-width="1.8"></circle>
+  </g>
+</svg>

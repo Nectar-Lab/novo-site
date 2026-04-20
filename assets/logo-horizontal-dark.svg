@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 76" role="img" aria-label="Nectar Lab">
+  <defs>
+    
+  </defs>
+  <g transform="translate(6 8)">
+    <path d="M18 2 L32 10 L32 26 L18 34 L4 26 L4 10 Z" fill="#F5B841"></path>
+    <path d="M34 26 L48 34 L48 50 L34 58 L20 50 L20 34 Z" fill="none" stroke="#F6F5F2" stroke-width="2.4" stroke-linejoin="round"></path>
+    <line x1="18" y1="18" x2="34" y2="42" stroke="#F6F5F2" stroke-width="2.4" stroke-linecap="round"></line>
+    <circle cx="18" cy="18" r="3.4" fill="#0F0F0F"></circle>
+    <circle cx="34" cy="42" r="3.4" fill="#F5B841" stroke="#F6F5F2" stroke-width="1.8"></circle>
+  </g>
+  <text x="68" y="40" font-family="Syne, &#39;Space Grotesk&#39;, sans-serif" font-weight="800" font-size="28" letter-spacing="-0.02em" fill="#F6F5F2">Nectar</text>
+  <text x="68" y="64" font-family="Syne, &#39;Space Grotesk&#39;, sans-serif" font-weight="500" font-size="28" letter-spacing="0.04em" fill="#F5B841">Lab</text>
+</svg>

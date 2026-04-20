@@ -1,0 +1,364 @@
+/* ===================================================================
+   NECTAR LAB · colors_and_type.css
+   Single source of truth for color, type and semantic tokens.
+   Supports light + dark themes automatically (prefers-color-scheme).
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ──────────────────────────────────────────────────────────────────
+   1. BRAND PALETTE — the honey + hive system
+   ─────────────────────────────────────────────────────────────────
+   Nectar Lab's identity sits on a warm amber core (honey) balanced
+   by dark graphite (the hive at night) and a clean bone/off-white
+   (the comb, by day). A single cool accent (cyan "royal jelly")
+   handles data + link states.
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand — Honey scale (primary accent) */
+  --honey-50:  #FFF8E7;
+  --honey-100: #FFECBF;
+  --honey-200: #FFDB8A;
+  --honey-300: #FFC857;   /* light-theme accent */
+  --honey-400: #F5B841;   /* core brand — "Nectar" */
+  --honey-500: #E0A020;
+  --honey-600: #B57D0E;
+  --honey-700: #8A5D06;
+  --honey-800: #5E3E02;
+  --honey-900: #3A2700;
+
+  /* Brand — Graphite scale (the hive) */
+  --graphite-50:  #F6F5F2;   /* comb / off-white bg */
+  --graphite-100: #EDEBE5;
+  --graphite-200: #D9D6CE;
+  --graphite-300: #B3AFA4;
+  --graphite-400: #7C7870;
+  --graphite-500: #4F4C46;
+  --graphite-600: #2E2C28;
+  --graphite-700: #1F1D1B;   /* dark card */
+  --graphite-800: #141312;   /* dark bg-elevated */
+  --graphite-900: #0F0F0F;   /* dark bg */
+
+  /* Accent — Royal Jelly (cool cyan for data / links) */
+  --jelly-300: #9BE3E0;
+  --jelly-400: #5CC8C4;
+  --jelly-500: #2AA7A2;
+
+  /* Semantic status */
+  --status-success: #4BB37B;
+  --status-warning: #F5B841;
+  --status-danger:  #E05C4B;
+  --status-info:    #5CC8C4;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   2. SEMANTIC TOKENS — light theme (default)
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg:              var(--graphite-50);
+  --bg-elevated:     #FFFFFF;
+  --bg-sunken:       var(--graphite-100);
+  --bg-inverse:      var(--graphite-900);
+
+  /* Cards */
+  --card-bg:         #FFFFFF;
+  --card-bg-hover:   var(--honey-50);
+  --card-border:     rgba(20, 19, 18, 0.08);
+  --card-shadow:     0 1px 2px rgba(20,19,18,.04), 0 4px 16px rgba(20,19,18,.04);
+  --card-shadow-hover: 0 2px 6px rgba(20,19,18,.06), 0 16px 40px rgba(245,184,65,.10);
+
+  /* Foreground */
+  --fg1:             var(--graphite-900);    /* primary text */
+  --fg2:             var(--graphite-600);    /* secondary */
+  --fg3:             var(--graphite-400);    /* tertiary / muted */
+  --fg-inverse:      var(--graphite-50);
+  --fg-on-accent:    var(--graphite-900);    /* text ON honey */
+
+  /* Accent (brand) */
+  --accent:          var(--honey-500);
+  --accent-hover:    var(--honey-600);
+  --accent-muted:    var(--honey-100);
+  --accent-glow:     rgba(245,184,65,.20);
+
+  /* Borders + dividers */
+  --border:          rgba(20, 19, 18, 0.08);
+  --border-strong:   rgba(20, 19, 18, 0.16);
+  --divider:         rgba(20, 19, 18, 0.06);
+
+  /* Input */
+  --input-bg:        #FFFFFF;
+  --input-border:    rgba(20,19,18,.12);
+  --input-focus:     var(--honey-400);
+
+  /* Code / mono surfaces */
+  --code-bg:         var(--graphite-100);
+  --code-fg:         var(--graphite-700);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   3. SEMANTIC TOKENS — dark theme (auto)
+   ────────────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:              var(--graphite-900);
+    --bg-elevated:     var(--graphite-800);
+    --bg-sunken:       #0A0A0A;
+    --bg-inverse:      var(--graphite-50);
+
+    --card-bg:         var(--graphite-700);
+    --card-bg-hover:   #262420;
+    --card-border:     rgba(255, 255, 255, 0.07);
+    --card-shadow:     0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+    --card-shadow-hover: 0 2px 6px rgba(0,0,0,.4), 0 16px 40px rgba(245,184,65,.10);
+
+    --fg1:             #F2F0EC;
+    --fg2:             #B3AFA4;
+    --fg3:             #7C7870;
+    --fg-inverse:      var(--graphite-900);
+    --fg-on-accent:    var(--graphite-900);
+
+    --accent:          var(--honey-400);
+    --accent-hover:    var(--honey-300);
+    --accent-muted:    rgba(245,184,65,.12);
+    --accent-glow:     rgba(245,184,65,.25);
+
+    --border:          rgba(255, 255, 255, 0.07);
+    --border-strong:   rgba(255, 255, 255, 0.15);
+    --divider:         rgba(255, 255, 255, 0.05);
+
+    --input-bg:        rgba(255,255,255,.03);
+    --input-border:    rgba(255, 255, 255, 0.10);
+    --input-focus:     var(--honey-400);
+
+    --code-bg:         #0A0A0A;
+    --code-fg:         var(--graphite-200);
+  }
+}
+
+/* Manual overrides — add [data-theme="dark"] or [data-theme="light"]
+   to <html> to pin theme regardless of system preference. */
+[data-theme="dark"] {
+  --bg:              var(--graphite-900);
+  --bg-elevated:     var(--graphite-800);
+  --bg-sunken:       #0A0A0A;
+  --bg-inverse:      var(--graphite-50);
+  --card-bg:         var(--graphite-700);
+  --card-bg-hover:   #262420;
+  --card-border:     rgba(255, 255, 255, 0.07);
+  --card-shadow:     0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+  --card-shadow-hover: 0 2px 6px rgba(0,0,0,.4), 0 16px 40px rgba(245,184,65,.10);
+  --fg1: #F2F0EC; --fg2: #B3AFA4; --fg3: #7C7870;
+  --fg-inverse: var(--graphite-900);
+  --accent: var(--honey-400);
+  --accent-hover: var(--honey-300);
+  --accent-muted: rgba(245,184,65,.12);
+  --accent-glow: rgba(245,184,65,.25);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --divider: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255,255,255,.03);
+  --input-border: rgba(255, 255, 255, 0.10);
+  --code-bg: #0A0A0A;
+  --code-fg: var(--graphite-200);
+}
+
+[data-theme="light"] {
+  --bg: var(--graphite-50);
+  --bg-elevated: #FFFFFF;
+  --bg-sunken: var(--graphite-100);
+  --bg-inverse: var(--graphite-900);
+  --card-bg: #FFFFFF;
+  --card-bg-hover: var(--honey-50);
+  --card-border: rgba(20, 19, 18, 0.08);
+  --card-shadow: 0 1px 2px rgba(20,19,18,.04), 0 4px 16px rgba(20,19,18,.04);
+  --card-shadow-hover: 0 2px 6px rgba(20,19,18,.06), 0 16px 40px rgba(245,184,65,.10);
+  --fg1: var(--graphite-900); --fg2: var(--graphite-600); --fg3: var(--graphite-400);
+  --fg-inverse: var(--graphite-50);
+  --accent: var(--honey-500);
+  --accent-hover: var(--honey-600);
+  --accent-muted: var(--honey-100);
+  --accent-glow: rgba(245,184,65,.20);
+  --border: rgba(20, 19, 18, 0.08);
+  --border-strong: rgba(20, 19, 18, 0.16);
+  --divider: rgba(20, 19, 18, 0.06);
+  --input-bg: #FFFFFF;
+  --input-border: rgba(20,19,18,.12);
+  --code-bg: var(--graphite-100);
+  --code-fg: var(--graphite-700);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   4. TYPE SCALE
+   ─────────────────────────────────────────────────────────────────
+   Display  — Space Grotesk, tight tracking, for titles/numbers
+   Body     — DM Sans, optimized for long-form reading
+   Mono     — JetBrains Mono, for code and data snippets
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Weights */
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* Fluid type ramp (clamp min / pref / max) */
+  --fs-display-xl: clamp(3.5rem, 8vw, 6.5rem);   /* hero */
+  --fs-display-lg: clamp(2.5rem, 5vw, 4rem);     /* section hero */
+  --fs-h1:         clamp(2rem, 3.5vw, 3rem);
+  --fs-h2:         clamp(1.5rem, 2.5vw, 2rem);
+  --fs-h3:         1.25rem;
+  --fs-h4:         1.0625rem;
+  --fs-body:       1rem;
+  --fs-small:      0.875rem;
+  --fs-caption:    0.75rem;
+  --fs-micro:      0.6875rem;
+
+  /* Line heights */
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.7;
+
+  /* Letter spacing */
+  --ls-tight:  -0.03em;
+  --ls-snug:   -0.01em;
+  --ls-normal: 0;
+  --ls-wide:   0.04em;
+  --ls-wider:  0.12em;
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   5. SPACING / RADIUS / SHADOW / MOTION
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  /* Spacing (4px base) */
+  --space-0: 0;
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  /* Shadows (elevation system) */
+  --shadow-xs: 0 1px 2px rgba(20,19,18,.04);
+  --shadow-sm: 0 1px 3px rgba(20,19,18,.06), 0 1px 2px rgba(20,19,18,.04);
+  --shadow-md: 0 4px 6px rgba(20,19,18,.05), 0 2px 4px rgba(20,19,18,.04);
+  --shadow-lg: 0 10px 20px rgba(20,19,18,.08), 0 4px 8px rgba(20,19,18,.04);
+  --shadow-xl: 0 20px 40px rgba(20,19,18,.10), 0 8px 16px rgba(20,19,18,.06);
+  --shadow-glow: 0 0 0 1px var(--accent-glow), 0 10px 40px var(--accent-glow);
+
+  /* Motion */
+  --ease-out:   cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-fast:   120ms;
+  --dur-base:   240ms;
+  --dur-slow:   420ms;
+  --transition: all var(--dur-base) var(--ease-in-out);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   6. TYPOGRAPHY — semantic class helpers
+   ────────────────────────────────────────────────────────────────── */
+.display-xl, .display-lg, h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--fg1);
+  margin: 0;
+}
+.display-xl { font-size: var(--fs-display-xl); letter-spacing: -0.035em; }
+.display-lg { font-size: var(--fs-display-lg); letter-spacing: -0.03em; }
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); letter-spacing: var(--ls-snug); }
+h3 { font-size: var(--fs-h3); font-weight: var(--fw-semibold); letter-spacing: var(--ls-snug); }
+h4 { font-size: var(--fs-h4); font-weight: var(--fw-semibold); letter-spacing: var(--ls-snug); }
+
+p, .body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--fg2);
+  margin: 0;
+}
+.small   { font-size: var(--fs-small); }
+.caption {
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.eyebrow { /* alias */
+  font-family: var(--font-display);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: .6rem;
+}
+.eyebrow::before {
+  content: ''; display: block; width: 22px; height: 1px; background: currentColor;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: .12em .45em;
+  border-radius: var(--radius-xs);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   7. RESET (light touch)
+   ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 16px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg1);
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
