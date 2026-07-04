@@ -1,357 +1,557 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nectar Lab — Em breve.</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400&family=JetBrains+Mono:wght@400&display=swap"
-    rel="stylesheet">
-  <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nectar Lab — Antes da IA, o processo.</title>
+<meta name="description" content="Consultoria de processos, dados e IA. Mapeamos como sua operação realmente funciona — depois automatizamos o que merece existir. Diagnóstico de processos em até 4 semanas.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="alternate icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  :root { --max: 1100px; }
+  body { overflow-x: hidden; }
 
-    html,
-    body {
-      height: 100%;
-      background: #0a0a0a;
-      color: #F2F0EC;
-      font-family: 'DM Sans', sans-serif;
-      overflow: hidden;
-    }
+  /* ── NAV ── */
+  nav.site-nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    height: 64px; padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+  }
+  nav.site-nav.scrolled {
+    background: color-mix(in oklab, var(--bg) 85%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em; color: var(--fg1); }
+  .brand .mark { width: 28px; height: 28px; }
+  .brand .mark img { width: 100%; height: 100%; display: block; }
+  .brand span.dot { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { font-size: .875rem; font-weight: 500; color: var(--fg2); position: relative; transition: var(--transition); }
+  .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 1px; background: var(--accent); transition: var(--transition); }
+  .nav-links a:hover { color: var(--fg1); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta { background: var(--accent); color: var(--fg-on-accent); font-family: var(--font-display); font-weight: 600; font-size: .82rem; padding: .5rem 1.15rem; border-radius: 8px; letter-spacing: .02em; transition: var(--transition); }
+  .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .theme-toggle { background: transparent; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; color: var(--fg2); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; transition: var(--transition); }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image: linear-gradient(rgba(245, 184, 65, .055) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 184, 65, .055) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: radial-gradient(ellipse 85% 70% at 65% 35%, black 15%, transparent 72%);
-    }
+  /* ── HERO ── */
+  #hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 96px 5% 80px; overflow: hidden; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--accent-glow) 1px, transparent 1px), linear-gradient(90deg, var(--accent-glow) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%); opacity: .5; }
+  .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 45%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent-muted); border: 1px solid rgba(245,184,65,.3); border-radius: 999px; padding: .35rem 1rem; font-family: var(--font-display); font-size: .72rem; font-weight: 600; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.75rem; }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(1.4); } }
+  .hero-title { font-family: var(--font-display); font-size: clamp(3.2rem, 7.5vw, 6rem); font-weight: 700; letter-spacing: -.035em; line-height: .97; margin: 0 0 1.25rem; color: var(--fg1); }
+  .hero-title .accent { color: var(--accent); display: block; font-weight: 600; }
+  .hero-sub { font-family: var(--font-body); font-size: clamp(1rem, 1.6vw, 1.2rem); color: var(--fg2); max-width: 640px; margin: 0 auto 2.5rem; font-weight: 400; line-height: 1.65; }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary, .btn-outline { font-family: var(--font-display); font-weight: 600; font-size: .9rem; padding: .8rem 1.75rem; border-radius: 8px; display: inline-flex; align-items: center; gap: .55rem; transition: var(--transition); border: 1px solid transparent; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: var(--fg-on-accent); }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+  .btn-outline { background: transparent; color: var(--fg1); border-color: var(--border-strong); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-primary svg, .btn-outline svg { width: 16px; height: 16px; }
 
-    .glow {
-      position: fixed;
-      width: 680px;
-      height: 680px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(245, 184, 65, .13) 0%, transparent 70%);
-      top: 2%;
-      right: -8%;
-      z-index: 0;
-      pointer-events: none;
-      animation: gp 6s ease-in-out infinite;
-    }
+  /* ── Sections ── */
+  section { position: relative; z-index: 1; padding: 100px 5%; }
+  section.alt { background: var(--bg-elevated); }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .section-head { max-width: 620px; margin: 0 0 3.5rem; }
+  .section-label { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-display); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .section-label::before { content: ''; width: 24px; height: 1px; background: currentColor; }
+  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 1rem; color: var(--fg1); }
+  .section-desc { font-size: 1rem; color: var(--fg2); line-height: 1.7; max-width: 560px; }
 
-    @keyframes gp {
+  /* ── Sintomas (problema) ── */
+  .sintomas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .sintoma { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 28px 24px; transition: var(--transition); }
+  .sintoma:hover { transform: translateY(-4px); border-color: rgba(224,92,75,.4); box-shadow: var(--card-shadow-hover); }
+  .sintoma .num { font-family: var(--font-mono); font-size: .72rem; color: var(--danger, #E05C4B); letter-spacing: .08em; }
+  .sintoma h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; margin: .6rem 0 .5rem; color: var(--fg1); }
+  .sintoma p { font-size: .87rem; color: var(--fg2); line-height: 1.65; margin: 0; }
+  .tese { max-width: var(--max); margin: 56px auto 0; border-left: 2px solid var(--accent); padding: 8px 0 8px 28px; }
+  .tese p { font-family: var(--font-display); font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-weight: 600; letter-spacing: -.02em; line-height: 1.35; color: var(--fg1); margin: 0; }
+  .tese p span { color: var(--accent); }
 
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: .8;
-      }
+  /* ── Método Colmeia ── */
+  .metodo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .etapa { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 26px 22px; transition: var(--transition); position: relative; overflow: hidden; }
+  .etapa::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-in-out); }
+  .etapa:hover { transform: translateY(-4px); border-color: rgba(245,184,65,.3); box-shadow: var(--card-shadow-hover); }
+  .etapa:hover::after { transform: scaleX(1); }
+  .etapa-hex { width: 44px; height: 44px; margin-bottom: 1.1rem; position: relative; display: flex; align-items: center; justify-content: center; }
+  .etapa-hex svg.hexbg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent-muted); }
+  .etapa-hex .n { position: relative; font-family: var(--font-display); font-weight: 700; font-size: .95rem; color: var(--accent); }
+  .etapa h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0 0 .45rem; color: var(--fg1); }
+  .etapa p { font-size: .85rem; color: var(--fg2); line-height: 1.6; margin: 0; }
 
-      50% {
-        transform: scale(1.1);
-        opacity: 1;
-      }
-    }
+  /* ── Diagnóstico (oferta) ── */
+  .diag-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: start; }
+  .diag-lista { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-direction: column; gap: 12px; }
+  .diag-lista li { display: flex; gap: 10px; align-items: flex-start; font-size: .95rem; color: var(--fg2); line-height: 1.6; }
+  .diag-lista li::before { content: '↗'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .diag-lista li strong { color: var(--fg1); font-weight: 600; }
+  .diag-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 32px 28px; box-shadow: var(--card-shadow, none); }
+  .diag-card .eyebrow { font-family: var(--font-display); font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .diag-card h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; margin: .6rem 0 .4rem; color: var(--fg1); }
+  .diag-card > p { font-size: .9rem; color: var(--fg2); line-height: 1.65; }
+  .diag-fatos { list-style: none; padding: 0; margin: 1.25rem 0 1.75rem; border-top: 1px solid var(--border); }
+  .diag-fatos li { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: .85rem; }
+  .diag-fatos .k { color: var(--fg3); font-family: var(--font-mono); font-size: .75rem; letter-spacing: .04em; }
+  .diag-fatos .v { color: var(--fg1); font-weight: 500; text-align: right; }
+  .diag-card .btn-primary { width: 100%; justify-content: center; }
+  .diag-nota { font-size: .78rem; color: var(--fg3); margin-top: 12px; line-height: 1.55; }
 
-    main {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      padding: clamp(20px, 4vw, 40px) clamp(24px, 5vw, 56px);
-    }
+  /* ── Serviços (entrega) ── */
+  .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .service { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 28px 22px; transition: var(--transition); position: relative; overflow: hidden; }
+  .service::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-in-out); }
+  .service:hover { transform: translateY(-4px); border-color: rgba(245,184,65,.3); box-shadow: var(--card-shadow-hover); }
+  .service:hover::after { transform: scaleX(1); }
+  .service-icon { width: 44px; height: 44px; background: var(--accent-muted); border-radius: 12px; color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0 0 .5rem; color: var(--fg1); }
+  .service p { font-size: .85rem; color: var(--fg2); line-height: 1.6; margin: 0; }
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  /* ── Stats strip ── */
+  .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: var(--max); margin: 48px auto 0; }
+  .stat-cell { background: var(--bg); padding: 28px 20px; text-align: left; }
+  .stat-number { font-family: var(--font-display); font-weight: 700; font-size: 2.4rem; color: var(--accent); letter-spacing: -.02em; line-height: 1; }
+  .stat-label { font-family: var(--font-body); font-size: .82rem; color: var(--fg2); margin-top: 6px; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
-      color: #F2F0EC;
-      text-decoration: none;
-    }
+  /* ── Cases ── */
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .project { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 14px; transition: var(--transition); position: relative; overflow: hidden; }
+  .project:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--card-shadow-hover); }
+  .project-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .project-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-muted); color: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .04em; }
+  .project h3 { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; margin: 0; color: var(--fg1); }
+  .project p { font-size: .87rem; color: var(--fg2); line-height: 1.6; margin: 0; }
+  .project-impacts { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .project-impacts li { font-size: .8rem; color: var(--fg2); display: flex; gap: 8px; align-items: flex-start; }
+  .project-impacts li::before { content: '↗'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .p-tag { font-family: var(--font-body); font-size: .7rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: rgba(20,19,18,.04); border: 1px solid var(--border); color: var(--fg2); letter-spacing: .02em; }
 
-    .brand .dot {
-      color: #F5B841;
-    }
+  /* ── Timeline ── */
+  .timeline { max-width: 780px; margin: 0 auto; position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: var(--border); }
+  .timeline-item { position: relative; padding-bottom: 2.5rem; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot { position: absolute; left: -2.3rem; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); transition: var(--transition); }
+  .timeline-item:hover .timeline-dot { background: var(--accent); border-color: var(--accent); }
+  .timeline-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .timeline-period { font-family: var(--font-display); font-size: .72rem; color: var(--accent); font-weight: 600; letter-spacing: .04em; background: var(--accent-muted); padding: .2rem .6rem; border-radius: 4px; }
+  .timeline-company { font-size: .82rem; color: var(--fg2); font-weight: 500; }
+  .timeline-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; margin: 2px 0 6px; color: var(--fg1); }
+  .timeline-desc { font-size: .88rem; color: var(--fg2); line-height: 1.7; }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(245, 184, 65, .09);
-      border: 1px solid rgba(245, 184, 65, .22);
-      border-radius: 999px;
-      padding: .28rem .9rem;
-      font-family: 'Syne', sans-serif;
-      font-size: .6rem;
-      font-weight: 700;
-      color: #F5B841;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
+  /* ── Contato ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 960px; margin: 0 auto; align-items: stretch; }
+  .contact-info h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.4rem); letter-spacing: -.03em; margin: 0 0 1rem; color: var(--fg1); line-height: 1.15; }
+  .contact-info h2 span { color: var(--accent); }
+  .contact-info p { color: var(--fg2); font-size: .95rem; line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; }
+  .contact-link { display: flex; align-items: center; gap: 14px; padding: 18px 20px; color: var(--fg2); font-size: .88rem; font-weight: 500; border-bottom: 1px solid var(--border); transition: var(--transition); }
+  .contact-link:last-child { border-bottom: none; }
+  .contact-link:hover { background: var(--card-bg-hover); color: var(--fg1); }
+  .contact-link svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+  .contact-link .k { font-family: var(--font-mono); font-size: 11px; color: var(--fg3); width: 64px; flex: 0 0 64px; letter-spacing: .06em; text-transform: uppercase; }
 
-    .bdot {
-      width: 5px;
-      height: 5px;
-      background: #F5B841;
-      border-radius: 50%;
-      animation: bk 1.9s ease-in-out infinite;
-    }
+  /* ── Footer ── */
+  footer { padding: 22px 5%; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .footer-copy { font-family: var(--font-mono); font-size: .75rem; color: var(--fg3); }
+  .footer-copy span { color: var(--accent); }
+  .footer-socials { display: flex; gap: 8px; }
+  .footer-socials a { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 8px; color: var(--fg3); transition: var(--transition); }
+  .footer-socials a:hover { color: var(--accent); border-color: var(--accent); }
+  .footer-socials svg { width: 15px; height: 15px; }
 
-    @keyframes bk {
+  /* ── Responsive ── */
+  @media (max-width: 980px) {
+    .services, .sintomas { grid-template-columns: repeat(2, 1fr); }
+    .metodo { grid-template-columns: repeat(2, 1fr); }
+    .projects { grid-template-columns: repeat(2, 1fr); }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid, .diag-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .services, .sintomas, .metodo, .projects, .stats-strip { grid-template-columns: 1fr; }
+  }
 
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: .15;
-      }
-    }
-
-    /* MEIO — texto e contador lado a lado */
-    .mid {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 48px;
-    }
-
-    .mid-text {
-      flex: 1 1 auto;
-    }
-
-    .eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .6rem;
-      color: #4F4C46;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: clamp(20px, 3vw, 32px);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .eyebrow::before {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 1px;
-      background: #4F4C46;
-    }
-
-    h1 {
-      font-family: sans-serif;
-      font-size: clamp(2.8rem, 7vw, 8rem);
-      font-weight: 800;
-      line-height: .91;
-      letter-spacing: -.04em;
-      color: #F2F0EC;
-    }
-
-    h1 .it {
-      font-style: italic;
-      font-weight: 700;
-      color: #F5B841;
-    }
-
-    h1 .mu {
-      color: #2E2C28;
-    }
-
-    /* COUNTDOWN */
-    .cd-block {
-      flex: 0 0 auto;
-    }
-
-    .cd {
-      display: flex;
-      align-items: flex-start;
-      gap: 2px;
-    }
-
-    .cd-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: clamp(52px, 5.5vw, 76px);
-    }
-
-    .cd-num {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 4.5vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -.05em;
-      line-height: 1;
-      color: #F2F0EC;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .cd-lbl {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .48rem;
-      color: #4F4C46;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      margin-top: 5px;
-    }
-
-    .cd-sep {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 3.5rem);
-      font-weight: 300;
-      color: #252320;
-      line-height: 1;
-      margin-top: 2px;
-      padding: 0 1px;
-    }
-
-    /* BOTTOM */
-    .bot {
-      padding-top: 28px;
-      border-top: 1px solid rgba(255, 255, 255, .05);
-    }
-
-    .prog-labels {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .55rem;
-      color: #4F4C46;
-      letter-spacing: .06em;
-      margin-bottom: 7px;
-    }
-
-    .prog-track {
-      height: 2px;
-      background: #1a1815;
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .prog-fill {
-      height: 100%;
-      background: #F5B841;
-      border-radius: 1px;
-      transition: width 1s linear;
-    }
-
-    .site-hint {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .58rem;
-      color: #2E2C28;
-      letter-spacing: .07em;
-      margin-top: 12px;
-    }
-
-    .site-hint a {
-      color: #4F4C46;
-      transition: color .2s;
-    }
-
-    .site-hint a:hover {
-      color: #F5B841;
-    }
-
-    /* mobile — contador vai para baixo */
-    @media(max-width:700px) {
-      body {
-        overflow: auto;
-      }
-
-      main {
-        height: auto;
-        min-height: 100vh;
-        padding: 24px 20px 32px;
-      }
-
-      .mid {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 32px;
-      }
-    }
-  </style>
+  /* fade-up */
+  .fade-up { opacity: 0; transform: translateY(24px); }
+  .fade-up.in { animation: fadeUp .6s var(--ease-in-out) both; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1 !important; transform: none !important; animation: none !important; }
+  }
+</style>
 </head>
+<body id="top">
 
-<body>
-  <div class="glow"></div>
-  <main>
-    <div class="top">
-      <a class="brand" href="https://nectarlab.com.br">
-        Nectar<span class="dot">Lab</span>
+<!-- NAV -->
+<nav class="site-nav" id="nav">
+  <a class="brand" href="#top">
+    <span class="mark"><img src="assets/logo-mark.svg" alt="" width="28" height="28" id="logoMark"></span>
+    <span>Nectar<span class="dot">.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+    <li><a href="#entrega">Entrega</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">AUTO</button>
+    <a href="#diagnostico" class="nav-cta">Quero o diagnóstico</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge fade-up in"><span class="hero-badge-dot"></span>Processos · Dados · IA</div>
+    <h1 class="hero-title fade-up in">Antes da IA,<span class="accent">o processo.</span></h1>
+    <p class="hero-sub fade-up in">Automatizar um processo ruim só entrega o erro mais rápido. A Nectar Lab mapeia como sua operação realmente funciona — e só então coloca automação, dados e IA sobre o que merece existir.</p>
+    <div class="hero-btns fade-up in">
+      <a href="#diagnostico" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L3 14 h9 l-1 8 10-12 h-9 z"/></svg>
+        Quero o diagnóstico
       </a>
-      <div class="badge"><span class="bdot"></span>Nova identidade · 01/05</div>
+      <a href="#metodo" class="btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8 v4 l2.5 2.5"/></svg>
+        Ver o método
+      </a>
     </div>
+  </div>
+</section>
 
-    <div class="mid">
-      <div class="mid-text">
-        <div class="eyebrow">Nectar Lab · Est. 2022 · Florianópolis — SC</div>
-        <h1>Dados que<br><span class="it">decidem,</span><br><span class="mu">não que</span><br>enfeitam.</h1>
-      </div>
-      <div class="cd-block">
-        <div class="cd">
-          <div class="cd-unit"><span class="cd-num" id="d">--</span><span class="cd-lbl">dias</span></div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit"><span class="cd-num" id="h">--</span><span class="cd-lbl">horas</span></div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit"><span class="cd-num" id="m">--</span><span class="cd-lbl">min</span></div>
-          <div class="cd-sep">:</div>
-          <div class="cd-unit"><span class="cd-num" id="s">--</span><span class="cd-lbl">seg</span></div>
+<!-- PROBLEMA -->
+<section id="problema" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">O problema</div>
+      <h2 class="section-title">Automatizou<br>e piorou?</h2>
+      <p class="section-desc">Todo mundo está comprando IA, automação e dashboard. Quase ninguém mapeou o processo por baixo. O resultado tem nome: catástrofe acelerada.</p>
+    </div>
+    <div class="sintomas">
+      <article class="sintoma fade-up">
+        <div class="num">SINTOMA 01</div>
+        <h3>O erro ganhou escala</h3>
+        <p>O que era um deslize de um analista agora roda mil vezes por dia, sem ninguém olhando. A automação não errou — ela executou o processo que existia.</p>
+      </article>
+      <article class="sintoma fade-up">
+        <div class="num">SINTOMA 02</div>
+        <h3>O dado não fecha</h3>
+        <p>Dashboard bonito, número errado. Quando o processo tem exceções não mapeadas, cada etapa registra a realidade de um jeito — e o relatório vira ficção.</p>
+      </article>
+      <article class="sintoma fade-up">
+        <div class="num">SINTOMA 03</div>
+        <h3>A operação depende de heróis</h3>
+        <p>O fluxo oficial está no manual; o fluxo real está no WhatsApp e na cabeça de duas pessoas. A IA aprendeu o manual — a empresa roda no improviso.</p>
+      </article>
+    </div>
+    <div class="tese fade-up">
+      <p>Dados sem decisão são só custo. <span>IA sem processo é prejuízo em alta velocidade.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO -->
+<section id="metodo">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Método Colmeia</div>
+      <h2 class="section-title">Seis lados, como todo<br>favo que sustenta peso.</h2>
+      <p class="section-desc">Nosso método de diagnóstico percorre seis etapas — do processo como ele realmente acontece até o roadmap do que automatizar, do que corrigir antes e do que eliminar.</p>
+    </div>
+    <div class="metodo">
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">1</span></div>
+        <h3>Mapear</h3>
+        <p>Entrevistas com quem executa e observação do fluxo real — não o do manual. Mapa AS-IS em BPMN simplificado.</p>
+      </article>
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">2</span></div>
+        <h3>Medir</h3>
+        <p>Tempos, volumes, custo por etapa e taxa de retrabalho. O processo ganha números antes de ganhar opinião.</p>
+      </article>
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">3</span></div>
+        <h3>Localizar</h3>
+        <p>Gargalos, handoffs quebrados, exceções sem dono e decisões que ninguém sabe quem toma.</p>
+      </article>
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">4</span></div>
+        <h3>Priorizar</h3>
+        <p>Matriz ROI × risco: o que automatizar, o que corrigir antes de automatizar e o que simplesmente eliminar.</p>
+      </article>
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">5</span></div>
+        <h3>Desenhar</h3>
+        <p>O processo TO-BE: como deve ficar, com os pontos de automação e de captura de dado marcados no fluxo.</p>
+      </article>
+      <article class="etapa fade-up">
+        <div class="etapa-hex"><svg class="hexbg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 21 6.75 v10.5 L12 22.5 3 17.25 V6.75 Z"/></svg><span class="n">6</span></div>
+        <h3>Ativar</h3>
+        <p>Roadmap executivo de 90 dias com quick wins, sequência de implementação e indicadores para acompanhar.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO (OFERTA) -->
+<section id="diagnostico" class="alt">
+  <div class="container diag-grid">
+    <div>
+      <div class="section-label">A porta de entrada</div>
+      <h2 class="section-title">Sprint de Diagnóstico<br>de Processos</h2>
+      <p class="section-desc">Um processo crítico da sua operação, de ponta a ponta, destrinchado em até 4 semanas. Você sai sabendo onde perde dinheiro — e o que fazer a respeito, em que ordem.</p>
+      <ul class="diag-lista">
+        <li><strong>Mapa AS-IS</strong> do processo real, legível por gente de negócio</li>
+        <li><strong>Diagnóstico de gargalos</strong> com números, não com impressões</li>
+        <li><strong>Matriz de priorização</strong> — automatizar, corrigir antes ou eliminar</li>
+        <li><strong>Desenho TO-BE</strong> com pontos de automação e de dado</li>
+        <li><strong>Roadmap executivo</strong> de 90 dias com quick wins na primeira quinzena</li>
+      </ul>
+    </div>
+    <div class="diag-card fade-up">
+      <div class="eyebrow">Formato</div>
+      <h3>2 a 4 semanas</h3>
+      <p>Escopo fechado, prazo fechado, entregáveis fixos. Não é projeto BPM de seis meses — é um sprint.</p>
+      <ul class="diag-fatos">
+        <li><span class="k">ESCOPO</span><span class="v">1 processo crítico, ponta a ponta</span></li>
+        <li><span class="k">SEU TIME</span><span class="v">3–4h de agenda na semana 1</span></li>
+        <li><span class="k">ENTREGA</span><span class="v">5 artefatos editáveis, seus</span></li>
+        <li><span class="k">DEPOIS</span><span class="v">implementação opcional conosco</span></li>
+      </ul>
+      <a href="https://wa.me/5548991703222" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L3 14 h9 l-1 8 10-12 h-9 z"/></svg>
+        Agendar conversa
+      </a>
+      <p class="diag-nota">Garantia de franqueza: se na semana 1 ficar claro que o seu problema não é processo, o sprint para — e o restante não é cobrado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGA -->
+<section id="entrega">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Depois do mapa</div>
+      <h2 class="section-title">Com o processo mapeado,<br>a máquina entra em campo.</h2>
+      <p class="section-desc">A entrega da Nectar Lab continua sendo dados, automação e IA — agora sobre um processo que merece existir. Quatro frentes que se conectam como um favo.</p>
+    </div>
+    <div class="services">
+      <article class="service fade-up">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L3 14 h9 l-1 8 10-12 h-9 z"/></svg></div>
+        <h3>Automação &amp; IA</h3>
+        <p>n8n, APIs e agentes de IA nos pontos que o diagnóstico marcou — com dono, log e plano B.</p>
+      </article>
+      <article class="service fade-up">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3 v18 h18"/><path d="M7 14 l4-4 4 4 6-6"/></svg></div>
+        <h3>Business Intelligence</h3>
+        <p>Dashboards e KPIs que nascem do processo mapeado — números que fecham, decisões que andam.</p>
+      </article>
+      <article class="service fade-up">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5 v14 a9 3 0 0 0 18 0 V5"/><path d="M3 12 a9 3 0 0 0 18 0"/></svg></div>
+        <h3>Engenharia de dados</h3>
+        <p>Pipelines, integrações e Modern Data Stack (Python, SQL, AWS, Airbyte) para sustentar a operação.</p>
+      </article>
+      <article class="service fade-up">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L2 7 l10 5 10-5 Z"/><path d="M2 17 l10 5 10-5"/><path d="M2 12 l10 5 10-5"/></svg></div>
+        <h3>Estratégia &amp; advisory</h3>
+        <p>Governança, roadmap e cultura de dados para o C-Level decidir com base, não com feeling.</p>
+      </article>
+    </div>
+    <div class="stats-strip">
+      <div class="stat-cell"><div class="stat-number">+11</div><div class="stat-label">anos em dados &amp; BI</div></div>
+      <div class="stat-cell"><div class="stat-number">+70</div><div class="stat-label">pessoas lideradas</div></div>
+      <div class="stat-cell"><div class="stat-number">60→85%</div><div class="stat-label">precisão de forecast em 6 meses</div></div>
+      <div class="stat-cell"><div class="stat-number">−35%</div><div class="stat-label">tempo de entrega em operação real</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases" class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Cases</div>
+      <h2 class="section-title">Problemas reais resolvidos<br>com método — não com sorte.</h2>
+      <p class="section-desc">Cada case representa uma decisão que deixou de ser intuição e virou processo.</p>
+    </div>
+    <div class="projects">
+      <article class="project fade-up">
+        <div class="project-head">
+          <div class="project-icon">BI</div>
         </div>
-      </div>
-    </div>
+        <h3>BI Estratégico — ExactSales</h3>
+        <p>Dashboard comercial em Power BI com modelagem relacional T-SQL e análise de funil.</p>
+        <ul class="project-impacts">
+          <li>Pipeline completo com modelagem em estrela</li>
+          <li>KPIs de conversão e eficiência comercial</li>
+        </ul>
+        <div class="project-tags"><span class="p-tag">Power BI</span><span class="p-tag">SQL</span><span class="p-tag">PostgreSQL</span></div>
+      </article>
 
-    <div class="bot">
-      <div class="prog-labels"><span>19 abr</span><span id="pct">0%</span><span>01 mai</span></div>
-      <div class="prog-track">
-        <div class="prog-fill" id="bar" style="width:0%"></div>
-      </div>
-      <div class="site-hint">Em breve em <a href="https://nectarlab.com.br">nectarlab.com.br</a></div>
+      <article class="project fade-up">
+        <div class="project-head">
+          <div class="project-icon">DW</div>
+        </div>
+        <h3>Data Warehouse corporativo</h3>
+        <p>5+ fontes unificadas em um único modelo analítico, dashboards em tempo real para C-Level.</p>
+        <ul class="project-impacts">
+          <li>Governança com controle por perfil</li>
+          <li>Alertas automáticos de inconsistência</li>
+        </ul>
+        <div class="project-tags"><span class="p-tag">Metabase</span><span class="p-tag">Power BI</span><span class="p-tag">SQL</span></div>
+      </article>
+
+      <article class="project fade-up">
+        <div class="project-head">
+          <div class="project-icon">FC</div>
+        </div>
+        <h3>Forecast &amp; Inteligência comercial</h3>
+        <p>Modelo preditivo integrado ao CRM. Previsibilidade de funil e planejamento de capacidade.</p>
+        <ul class="project-impacts">
+          <li>Precisão de 60% → 85% em 6 meses</li>
+          <li>Segmentação por score de conversão</li>
+        </ul>
+        <div class="project-tags"><span class="p-tag">Python</span><span class="p-tag">Power BI</span><span class="p-tag">SQL</span></div>
+      </article>
     </div>
-  </main>
-  <script>
-    const T = new Date('2026-05-01T00:00:00'), S = new Date('2026-04-19T00:00:00'), TOT = T - S;
-    const pad = n => String(n).padStart(2, '0');
-    function tick() {
-      const now = new Date(), diff = T - now;
-      if (diff <= 0) { ['d', 'h', 'm', 's'].forEach(id => document.getElementById(id).textContent = '00'); document.getElementById('bar').style.width = '100%'; document.getElementById('pct').textContent = '100%'; return; }
-      document.getElementById('d').textContent = pad(Math.floor(diff / 86400000));
-      document.getElementById('h').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-      document.getElementById('m').textContent = pad(Math.floor((diff % 3600000) / 60000));
-      document.getElementById('s').textContent = pad(Math.floor((diff % 60000) / 1000));
-      const p = Math.min(100, Math.round(((now - S) / TOT) * 100));
-      document.getElementById('bar').style.width = p + '%';
-      document.getElementById('pct').textContent = p + '%';
-    }
-    tick(); setInterval(tick, 1000);
-  </script>
+  </div>
+</section>
+
+<!-- JORNADA -->
+<section id="jornada">
+  <div class="container">
+    <div class="section-head" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <div class="section-label" style="justify-content:center;">Trajetória</div>
+      <h2 class="section-title">Uma jornada construída<br>sobre operação de verdade.</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item"><span class="timeline-dot"></span>
+        <div class="timeline-meta"><span class="timeline-period">Jun 2022 — Presente</span><span class="timeline-company">Nectar Lab · Fundador</span></div>
+        <div class="timeline-title">Processos, dados &amp; BI</div>
+        <p class="timeline-desc">Consultoria de diagnóstico de processos, dashboards executivos, aplicativos analíticos e automação para clientes PJ.</p>
+      </div>
+      <div class="timeline-item"><span class="timeline-dot"></span>
+        <div class="timeline-meta"><span class="timeline-period">Fev 2024 — Presente</span><span class="timeline-company">Engenheiro de Dados · Indústria de CX</span></div>
+        <div class="timeline-title">Inteligência empresarial e processos</div>
+        <p class="timeline-desc">Pipelines em Python e SQL sobre AWS, migração para Modern Data Stack (Airbyte + dbt-core) e mapeamento de processos em comitê de inovação.</p>
+      </div>
+      <div class="timeline-item"><span class="timeline-dot"></span>
+        <div class="timeline-meta"><span class="timeline-period">Fev 2023 — Dez 2023</span><span class="timeline-company">ZOOMtecnologia · Especialista BI</span></div>
+        <div class="timeline-title">De planilhas a plataforma</div>
+        <p class="timeline-desc">Criou middleware ERP → Databricks → Power BI. Publicou indicadores para todas as gerências em 3 meses. Aprovou Planejamento Estratégico 2024–2028.</p>
+      </div>
+      <div class="timeline-item"><span class="timeline-dot"></span>
+        <div class="timeline-meta"><span class="timeline-period">Jul 2021 — Jan 2023</span><span class="timeline-company">Labellamafia · Coord. DevOps &amp; Head S&amp;OP</span></div>
+        <div class="timeline-title">Duas cadeiras, um comitê executivo</div>
+        <p class="timeline-desc">Liderou DevOps &amp; Analytics com práticas ágeis (Scrum/JIRA) e, em paralelo, assumiu Head de S&amp;OP com simulação ERP para estoque e produção.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="alt">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <div class="section-label">Contato</div>
+      <h2>Dados sem decisão são só custo.<br><span>IA sem processo é prejuízo em alta velocidade.</span></h2>
+      <p>Se você está prestes a automatizar — ou já automatizou e o resultado não veio — começa pelo diagnóstico. Uma conversa de 30 minutos diz se o sprint faz sentido para a sua operação.</p>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:contato@nectarlab.com.br">
+        <span class="k">Email</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 L12 13 L2 6"/></svg>
+        contato@nectarlab.com.br
+      </a>
+      <a class="contact-link" href="https://wa.me/5548991703222">
+        <span class="k">Whats</span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.852L.057 23.5l5.797-1.522A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.887 9.887 0 0 1-5.031-1.375l-.361-.214-3.741.981.999-3.648-.235-.374A9.865 9.865 0 0 1 2.106 12C2.106 6.58 6.58 2.106 12 2.106S21.894 6.58 21.894 12 17.42 21.894 12 21.894z"/></svg>
+        +55 (48) 99170-3222
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/company/nectarlab-consultoria/">
+        <span class="k">LinkedIn</span>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1.5a5.94 5.94 0 0 1 2-1.5z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        /company/nectarlab-consultoria
+      </a>
+      <a class="contact-link" href="https://instagram.com/nectarlab.com.br">
+        <span class="k">Instagram</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+        @nectarlab.com.br
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2026 <span>Nectar Lab</span> · Palhoça — SC · CNPJ 46.446.125-0001/40</div>
+  <div class="footer-socials">
+    <a href="https://www.linkedin.com/company/nectarlab-consultoria/" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1.5a5.94 5.94 0 0 1 2-1.5z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="https://instagram.com/nectarlab.com.br" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
+
+  const tt = document.getElementById('themeToggle');
+  const logoMark = document.getElementById('logoMark');
+  const order = ['auto', 'light', 'dark'];
+  let cur = localStorage.getItem('nl-theme') || 'auto';
+
+  const getEffectiveTheme = (m) => {
+    if (m !== 'auto') return m;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+
+  const updateLogo = (m) => {
+    const effective = getEffectiveTheme(m);
+    logoMark.src = effective === 'dark' ? 'assets/logo-mark-dark.svg' : 'assets/logo-mark.svg';
+  };
+
+  const apply = (m) => {
+    if (m === 'auto') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', m);
+    tt.textContent = m.toUpperCase();
+    localStorage.setItem('nl-theme', m);
+    updateLogo(m);
+  };
+
+  apply(cur);
+
+  tt.addEventListener('click', () => {
+    cur = order[(order.indexOf(cur) + 1) % order.length];
+    apply(cur);
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (cur === 'auto') updateLogo('auto');
+  });
+
+  // fade-up on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll('.fade-up:not(.in)').forEach(el => io.observe(el));
+</script>
 </body>
-
 </html>
