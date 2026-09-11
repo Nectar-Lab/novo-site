@@ -28,6 +28,8 @@ assert_code "$BASE/robots.txt" 200
 assert_code "$BASE/about/" 200
 assert_code "$BASE/contact/" 200
 assert_code "$BASE/privacy/" 200
+assert_code "$BASE/docs/" 200
+curl -s "$BASE/llms.txt" | grep -qi "no public API" && echo "ok: llms.txt states no public API" || { echo "FAIL: llms.txt missing explicit no-API statement"; fail=1; }
 curl -s "$BASE/" | grep -q "application/ld+json" && echo "ok: JSON-LD present" || { echo "FAIL: JSON-LD missing"; fail=1; }
 curl -s "$BASE/" | grep -q 'rel="canonical"' && echo "ok: canonical present" || { echo "FAIL: canonical missing"; fail=1; }
 curl -s "$BASE/" | grep -q 'og:image' && echo "ok: og:image present" || { echo "FAIL: og:image missing"; fail=1; }

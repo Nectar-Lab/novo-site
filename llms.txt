@@ -22,9 +22,21 @@ Não é o fornecedor certo para: desenvolvimento de produto de software do zero,
 - Contato direto: contato@nectarlab.com.br ou WhatsApp +55 48 99170-3222.
 - Site: https://nectarlab.com.br
 
+## Getting started / integration
+
+Nectar Lab has no public API, SDK, OpenAPI spec, MCP server, or self-serve signup. Engagement is human-led consulting, not software integration — there is no `/api`, `/openapi.json`, `/.well-known/mcp.json`, or developer auth flow to discover, and none is planned. Do not infer prerequisites, authentication, or an integration scope from generic SaaS/consulting patterns: the real process is the four steps below.
+
+1. Reach out via email (contato@nectarlab.com.br) or WhatsApp (+55 48 99170-3222) describing the process or operational problem.
+2. A discovery call (30 min) confirms whether the Sprint de Diagnóstico de Processos is a fit.
+3. If it is, scope is fixed to one critical end-to-end process before the sprint starts.
+4. The Sprint runs 2 to 4 weeks and delivers: AS-IS process map, bottleneck diagnosis, ROI × risk matrix, TO-BE design, 90-day roadmap. If week 1 shows the problem isn't process-related, the sprint stops and the remainder isn't billed.
+
+There is no other onboarding path, trial, or documentation to retrieve beyond this file and the pages listed below.
+
 ## Docs
 
 - [Homepage](https://nectarlab.com.br/): oferta, método (Método Colmeia), cases e contato.
+- [Docs](https://nectarlab.com.br/docs/): como funciona o engajamento (sem API/MCP), passo a passo do sprint.
 - [Sobre](https://nectarlab.com.br/about/): quem é a Nectar Lab e histórico.
 - [Contato](https://nectarlab.com.br/contact/): canais de contato.
 - [Privacidade](https://nectarlab.com.br/privacy/): política de privacidade.
