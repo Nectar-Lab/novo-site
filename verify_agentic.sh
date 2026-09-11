@@ -32,4 +32,10 @@ curl -s "$BASE/" | grep -q "application/ld+json" && echo "ok: JSON-LD present" |
 curl -s "$BASE/" | grep -q 'rel="canonical"' && echo "ok: canonical present" || { echo "FAIL: canonical missing"; fail=1; }
 curl -s "$BASE/" | grep -q 'og:image' && echo "ok: og:image present" || { echo "FAIL: og:image missing"; fail=1; }
 
+# www -> apex canonicalization (only meaningful when hitting the real vhost, e.g. -H "Host: www.nectarlab.com.br")
+if [ -n "$2" ]; then
+  loc=$(curl -s -D- -o /dev/null -H "Host: $2" "$BASE/" | tr -d '\r' | grep -i '^location:')
+  echo "$loc" | grep -qi "https://nectarlab.com.br/" && echo "ok: www host redirects to apex" || { echo "FAIL: www host does not redirect to apex (got: $loc)"; fail=1; }
+fi
+
 exit $fail
