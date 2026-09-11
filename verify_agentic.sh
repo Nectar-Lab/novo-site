@@ -18,6 +18,10 @@ assert_header() {
 assert_code "$BASE/does-not-exist-xyz" 404
 assert_header "$BASE/" "content-type" "Accept: text/markdown" "text/markdown"
 assert_header "$BASE/" "vary" "Accept: text/markdown" "accept"
+assert_header "$BASE/does-not-exist-xyz" "content-type" "Accept: text/markdown" "text/markdown"
+assert_code "$BASE/does-not-exist-xyz" 404
+curl -s "$BASE/does-not-exist-xyz" -H "Accept: text/markdown" | grep -q "^# 404" && echo "ok: 404 markdown body has heading" || { echo "FAIL: 404 markdown body missing heading"; fail=1; }
+curl -s "$BASE/does-not-exist-xyz" -H "Accept: text/markdown" | grep -q "sitemap.xml" && echo "ok: 404 markdown body links sitemap" || { echo "FAIL: 404 markdown body missing sitemap link"; fail=1; }
 assert_code "$BASE/sitemap.xml" 200
 assert_code "$BASE/llms.txt" 200
 assert_code "$BASE/robots.txt" 200
