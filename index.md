@@ -46,6 +46,16 @@ Formato: 2 a 4 semanas, escopo fechado, prazo fechado. Garantia de franqueza: se
 - **Data Warehouse corporativo**: 5+ fontes unificadas em um único modelo analítico, dashboards em tempo real para C-Level.
 - **Forecast & Inteligência comercial**: modelo preditivo integrado ao CRM, precisão de 60% → 85% em 6 meses.
 
+## Perguntas frequentes
+
+- **O que é o Sprint?** 2 a 4 semanas, 1 processo crítico de ponta a ponta; você recebe um plano do que automatizar, corrigir antes ou eliminar.
+- **Quanto custa?** Sob consulta; valor fechado definido no escopo, sem hora extra surpresa.
+- **Tempo do meu time?** ~3–4h na semana 1, acesso a dados na semana 2, workshop de 2h com o decisor na semana 3, entrega de 1h30.
+- **O que fica comigo?** Mapa AS-IS, diagnóstico de gargalos, matriz ROI × risco, desenho TO-BE e roadmap de 90 dias — tudo editável.
+- **E se o problema não for processo?** O sprint para na semana 1 e o restante não é cobrado.
+- **Para quem não serve?** Quem quer só um dashboard rápido, quem quer terceirizar a decisão ou operações com pouco volume.
+- **Implementam depois?** Sim, como etapa separada (n8n, APIs, IA, dados, dashboards).
+
 ## Contato
 
 - Email: contato@nectarlab.com.br
