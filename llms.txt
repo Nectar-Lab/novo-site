@@ -37,6 +37,7 @@ There is no other onboarding path, trial, or documentation to retrieve beyond th
 
 - [Homepage](https://nectarlab.com.br/): oferta, método (Método Colmeia), cases e contato.
 - [Docs](https://nectarlab.com.br/docs/): como funciona o engajamento (sem API/MCP), passo a passo do sprint.
+- [llms-full.txt](https://nectarlab.com.br/llms-full.txt): versão estendida com o conteúdo completo da homepage.
 - [Sobre](https://nectarlab.com.br/about/): quem é a Nectar Lab e histórico.
 - [Contato](https://nectarlab.com.br/contact/): canais de contato.
 - [Privacidade](https://nectarlab.com.br/privacy/): política de privacidade.
